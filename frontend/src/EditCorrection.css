@@ -1,0 +1,120 @@
+.edit-correction-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1e2f44;
+}
+
+.edit-correction-title {
+  text-align: center;
+  margin-bottom: 24px;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.edit-correction-info {
+  margin-bottom: 24px;
+}
+
+.edit-correction-info label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.edit-correction-info input[type="text"],
+.edit-correction-info input[type="number"],
+.edit-correction-info textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.edit-correction-info textarea {
+  min-height: 100px;
+}
+
+.edit-correction-grade {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+  background-color: #f9fafb;
+}
+
+.edit-correction-grade label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.edit-correction-grade strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+.edit-correction-grade textarea,
+.edit-correction-grade input[type="number"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.edit-correction-grade input[type="number"] {
+  max-width: 80px;
+}
+
+.edit-correction-grade div {
+  margin-top: 8px;
+}
+
+.edit-correction-save-btn {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  background-color: #3a7bd5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(58, 123, 213, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.edit-correction-save-btn:hover:enabled {
+  background-color: #2e65bb;
+}
+
+.edit-correction-save-btn:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.edit-correction-no-data,
+.edit-correction-saving {
+  font-style: italic;
+  color: #64748b;
+  text-align: center;
+}
+
+.edit-correction-container p {
+  font-style: italic;
+  color: #64748b;
+  text-align: center;
+}
