@@ -1,133 +1,323 @@
-# EvaluAI (FastAPI + React + MongoDB + Docker)
+# EvaluAI: Automated Exam Grading and Feedback Platform Using Large Language Models
 
-Web application for automated exam grading and feedback generation based on LLMs and formal rubrics. It integrates a complete workflow from submission upload (PDF/files) and criteria definition, to evaluation, result reporting, and later export/query for review.
+EvaluAI is an open-source web application for automated exam grading and feedback generation using Large Language Models (LLMs). The platform allows instructors to define structured digital rubrics, upload student exams, automatically evaluate responses, review AI-generated feedback, manually adjust results, and download structured PDF reports.
 
-The objective of the project is to streamline grading and standardize evaluation criteria, while maintaining traceability of results and feedback (depending on the teacher’s configuration). It is designed to demonstrate a full-stack architecture (FastAPI + React + MongoDB + Docker) and integration with a configurable LLM provider (e.g., Gemini)
+EvaluAI supports both digital and scanned handwritten submissions. It is designed as a domain-independent platform for AI-assisted assessment, enabling instructors and researchers to evaluate open-ended student artifacts in a more scalable, consistent, and traceable way.
 
-## Architecture
+## Main Features
 
-The project is divided into the following main components:
+* Creation and management of structured digital rubrics.
+* Automated grading of individual exams.
+* Batch grading of multiple exams.
+* Support for PDF submissions, including scanned handwritten answers.
+* Rubric-guided LLM evaluation using Google Gemini.
+* Human-in-the-loop review of AI-generated grades and feedback.
+* Manual correction and grade adjustment by the instructor.
+* Storage of temporary and definitive exam results.
+* Downloadable PDF feedback reports.
+* Docker-based deployment for easy execution.
 
--Backend: REST API with FastAPI (handles business logic, evaluation, and persistence).
--Frontend: React (interface for uploading documents, managing rubrics, and reviewing results).
--Database: MongoDB (stores rubrics, exams, results, etc.).
--LLM provider: API integration (for example, Google Gemini).
--Infrastructure: Docker / Docker Compose for development and local deployment.
+A video demonstration of the application workflow and main features is available here:
 
-## Quick Overview
+https://youtu.be/0obclKtnpmQ
 
-<img src="docs/img/paginaPrincipal.png" width="700" alt="Pantalla principal" />
-<img src="docs/img/corregirExamen.png" width="700" alt="Pantalla de inicio" />
+## System Architecture
 
-More screenshots: [docs/img/](docs/img/)
+EvaluAI follows a modular client-server architecture designed to separate the user interface, application logic, data persistence, and external LLM-based evaluation services.
 
-## Technologies
+<img width="762" height="425" alt="fig1" src="https://github.com/user-attachments/assets/7c76e494-d442-4c14-aec9-0ac92bdbf13f" />
 
-- Backend: Python + FastAPI (+ Uvicorn).
-- Frontend: React 
-- Database: MongoDB
-- Infra/DevOps: Docker, Docker Compose.
-- LLM: Google Gemini API 
 
-## Application Walkthrough & Screenshots
+* **Presentation Layer (Frontend):** Implemented as a React single-page application. This layer provides the user interface for rubric management, exam upload, correction review, and report download. React Router is used to support asynchronous navigation without full-page reloads, providing a fluid user experience.
 
-Below is the step-by-step workflow of **EvaluAI** evaluating a real Computer Science exam (*Análisis y Diseño de Algoritmos*).
+* **Logic Layer (Backend):** Implemented with FastAPI in Python. The backend exposes REST endpoints for user, rubric, and exam management, and coordinates the automated evaluation workflow. This includes document processing, prompt construction, communication with the Gemini API, and result handling.
 
-### 0. Rubric Management
-Create, view, and fine-tune formal evaluation rubrics before grading. The system supports full CRUD operations, allowing you to manage question statements, itemized criteria, and custom point distributions.
+* **Data Persistence Layer:** Implemented with MongoDB. The document-oriented database model allows EvaluAI to store flexible data structures such as rubrics, exam metadata, temporary corrections, and definitive results.
 
-| Rubrics Dashboard (List) | Creating a New Rubric |
-| :---: | :---: |
-| <img src="docs/img/rubrics_list.png" width="460" alt="My Rubrics dashboard view" /> | <img src="docs/img/create_rubric_form.png" width="460" alt="Blank create rubric interface" /> |
 
-<details>
-<summary>⚙️ View Rubric Editing Modal</summary>
-<br>
-You can easily adjust details, append new criteria, or modify points for existing rubrics at any time through the quick edit view.
 
-<img src="docs/img/edit_rubric_modal.png" width="400" alt="Edit rubric populated modal" />
-</details>
 
----
+## Repository Structure
 
-### 1. Grading Setup
-Select your pre-configured rubric, write custom guidelines for the AI evaluator, and upload the student's exam PDF.
+The repository is organized into two main components: the backend, which provides the API and coordinates the automated evaluation workflow, and the frontend, which provides the web interface used by instructors. Additional configuration files are included to support Docker-based execution, environment configuration, and example-based testing.
 
-| Submit Exam Interface | Full Dashboard View |
-| :---: | :---: |
-| <img src="docs/img/grade_single_modal.png" width="400" alt="Grade single exam modal" /> | <img src="docs/img/grade_single_dashboard.png" width="500" alt="Full dashboard setup" /> |
+```text
+EvaluAI-Project-main/
+├── backend/
+│   ├── main.py
+│   ├── database.py
+│   ├── orchestrator.py
+│   ├── requirements.txt
+│   ├── dockerfile
+│   ├── routers/
+│   │   ├── exams.py
+│   │   ├── rubrics.py
+│   │   ├── temp_exams.py
+│   │   └── users.py
+│   ├── repo/
+│   │   ├── exam_repo.py
+│   │   ├── rubric_repo.py
+│   │   ├── temp_exams_repo.py
+│   │   └── user_repo.py
+│   └── utils/
+│       ├── gemini_client.py
+│       ├── openai_client.py
+│       └── openrouter_client.py
+├── frontend/
+│   ├── dockerfile
+│   ├── package.json
+│   ├── public/
+│   └── src/
+│       ├── App.js
+│       ├── index.js
+│       ├── UserContext.js
+│       ├── PrivateRoute.js
+│       ├── Navbar.js / Navbar.css
+│       ├── Home.js / Home.css
+│       ├── Login.js / Login.css
+│       ├── Register.js / Register.css
+│       ├── HomeLayout.js / HomeLayout.css
+│       ├── LayoutWithNavbar.js
+│       ├── TeacherDashboard.js / .css
+│       ├── CreateRubric.js / .css
+│       ├── MyRubrics.js / .css
+│       ├── GradeSingleExam.js / .css
+│       ├── GradeBatchExams.js / .css
+│       ├── MyExams.js / .css
+│       ├── EditCorrection.js / .css
+│       ├── ViewBatchExams.js / .css
+│       ├── ViewResults.js
+│       ├── LoadingOverlay.js
+│       └── assets/
+├── docker-compose.yml
+├── package.json
+├── .env / .env.example
+└── temp/
+```
 
----
+The `examples/` folder contains an example exam that can be used to test the platform after installation.
 
-### 2. Live Review & AI Correction Panel
-Once processed, you can review the AI's grading item by item. The platform allows teachers to see specific comments, maximum scores, and even override the assigned grade manually.
+## Requirements
 
-<details>
-<summary>📸 Click to expand the Review & Edit Interface screenshots</summary>
+### Recommended: Docker Execution
 
-#### Main Correction Header & General Feedback
-<img src="docs/img/view_correction_main.png" width="800" alt="View and edit correction main view" />
+* Git
+* Docker Engine
+* Docker Compose v2
+* A valid Google Gemini API key
 
-#### Itemized Evaluation (Criteria Breakdown)
-* **Question 1a (Data Structures):** The student correctly modeled the problem using a connected, weighted graph (Score: 2/2).
-* **Question 1b (Algorithm Selection):** The system successfully flagged a conceptual error when the student suggested Floyd-Warshall/Dijkstra instead of Minimum Spanning Trees (Score: 0/1).
+### Local Execution Without Docker
 
-<img src="docs/img/view_correction_q1.png" width="800" alt="Question 1 breakdown" />
-<img src="docs/img/view_correction_q2.png" width="800" alt="Question 2 breakdown" />
-</details>
+* Python 3.10 or later
+* Node.js 18 or later
+* npm
+* MongoDB
+* A valid Google Gemini API key
 
----
+For review purposes, a valid Gemini API key is provided with the artifact to allow reviewers to test the system without creating their own key.
 
-### 3. Generated PDF Exam Report
-Teachers can track all evaluations from the history table and download a clean, structured PDF report containing the comprehensive feedback loop for the student.
+## Installation and Execution with Docker
 
-| Exam History List | Downloaded PDF Report Sample |
-| :---: | :---: |
-| <img src="docs/img/my_exam_list.png" width="450" alt="My exams list table" /> | <img src="docs/img/exam_report_pdf.png" width="400" alt="Official PDF Exam Report" /> |
+Docker is the recommended way to run EvaluAI.
 
-## How to run
+### 1. Clone the Repository
 
-### With Docker (recommended)
+```bash
+git clone https://github.com/ArturoBarriga/EvaluAI-Project.git
+cd EvaluAI-Project
+```
 
-1) Create your environment file:
+### 2. Create the Environment File
 
-- **Linux / macOS:**
-  ```bash
-    cp .env.example .env
-  ```
+Linux or macOS:
 
-- **Windows (CMD):**
-  ```cmd
-    copy .env.example .env
-  ```
+```bash
+cp .env.example .env
+```
 
-⚠️ **IMPORTANT: Configure Gemini API Key**
-Before running the application, you must configure your Gemini API Key inside the newly created `.env` file. Without this step, the application will fail to start, and the Docker containers will throw errors. Additionally, ensure that your Google AI Studio / Gemini account has a valid billing card linked to it, as the API Key may not function properly on completely free or unverified tiers.
+Windows CMD:
 
-2) Start the stack:
-  ```bash
-    docker compose up --build
-  ```
-3) Open the app:
+```cmd
+copy .env.example .env
+```
 
-Frontend: http://localhost:3000
+Windows PowerShell:
 
-### Locally (without Docker)
-Backend:
+```powershell
+Copy-Item .env.example .env
+```
+
+### 3. Configure the Gemini API Key
+
+Open the `.env` file and set the Gemini API key:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+For peer review, a valid Gemini API key has been created specifically to allow reviewers to assess the tool without needing to generate their own key. The key includes a limited budget that is sufficient to execute the example workflow included in this repository:
+
+```env
+GEMINI_API_KEY= 
+```
+
+### 4. Start the Application
+
+```bash
+docker compose up -d --build
+```
+
+### 5. Check That the Containers Are Running
+
+```bash
+docker compose ps
+```
+
+### 6. Open the Application
+
+Frontend:
+
+```text
+http://localhost:3000
+```
+
+### 7. Stop the Application
+
+```bash
+docker compose down
+```
+
+To stop the application and remove stored data:
+
+```bash
+docker compose down -v
+```
+
+## Installation and Execution Without Docker
+
+The system can also be executed manually.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/ArturoBarriga/EvaluAI-Project.git
+cd EvaluAI-Project
+```
+
+### 2. Create the Environment File
+
+Linux or macOS:
+
+```bash
+cp .env.example .env
+```
+
+Windows CMD:
+
+```cmd
+copy .env.example .env
+```
+
+### 3. Configure the Environment Variables
+
+Open `.env` and configure the Gemini API key:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### 4. Start the Backend
+
 ```bash
 cd backend
 python -m venv .venv
-# Windows: .venv\Scripts\activate
+```
+
+Activate the virtual environment.
+
+Linux or macOS:
+
+```bash
 source .venv/bin/activate
+```
+
+Windows CMD:
+
+```cmd
+.venv\Scripts\activate
+```
+
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
+```
+
+Start the backend:
+
+```bash
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Frotend: 
+### 5. Start the Frontend
+
+Open a new terminal from the repository root:
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
- 
-Important (local mode): if you run the project **without Docker**, you need to have MongoDB available (local or remote) and set the `MONGO_URI` variable in your `.env` file.
+
+Then open the frontend in your browser. Depending on the frontend configuration, the application will usually be available at:
+
+```text
+http://localhost:3000
+```
+
+or:
+
+```text
+http://localhost:5173
+```
+
+## Example Exam and Rubric
+
+The rubric and exam provided as examples are inspired by the subject **Design and Analysis of Algorithms**. They do not contain real student submissions and were created as synthetic materials for demonstration and reproducibility purposes.
+
+The rubric is organized by questions. Each question contains several criterion–point pairs that guide the LLM during the automated evaluation.
+
+The complete rubric and exam are available in:
+
+- `examples/example_rubric.txt`
+- `examples/example_exam.pdf`
+
+These files allow users and reviewers to test the complete EvaluAI workflow without preparing their own assessment material.
+
+Suggested testing procedure:
+
+1. Start the application.
+2. Open the frontend in the browser.
+3. Create or log in with a user account.
+4. Go to the rubric management section.
+5. Load or manually create the example rubric.
+6. Go to the exam grading section.
+7. Select the example rubric.
+8. Upload the example exam.
+9. Run the automated evaluation.
+10. Review the AI-generated grade and feedback.
+11. Confirm or manually adjust the result.
+12. Download the generated PDF report.
+
+## Authors
+
+* José A. Barriga jose@unex.es
+* Jesús Moruno jmorunom@alumnos.unex.es
+* Arturo Barriga arturobc@unex.es
+* Julio D. Arjona julioda@unex.es
+* Pedro J. Clemente pjclemente@unex.es
+
+Quercus Software Engineering Group, Departamento de Ingeniería de Sistemas Informáticos y Telemáticos, Universidad de Extremadura, Avenida de la Universidad s/n, 10003 Cáceres, Spain
+
+
+Academic use of EvaluAI should cite the associated SoftwareX paper.
