@@ -229,19 +229,31 @@ Open the `.env` file and configure the Gemini API key:
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-Although the Gemini API key is configured in the .env file, when running the backend manually it may be necessary to also define the environment variable in the same active terminal session used to start the server.
+For local execution without Docker, MongoDB must be running on the host machine. Therefore, the MongoDB connection string must point to `localhost`:
+
+```env
+MONGO_URI=mongodb://localhost:27017
+```
+
+Although the Gemini API key and MongoDB connection are configured in the `.env` file, when running the backend manually it may be necessary to also define the environment variables in the same active terminal session used to start the server.
 
 Linux or macOS:
 
 ```bash
 export GEMINI_API_KEY=your_gemini_api_key_here
+export MONGO_URI=mongodb://localhost:27017
 ```
 
 Windows CMD:
 
-```bash
+```cmd
 set GEMINI_API_KEY=your_gemini_api_key_here
+set MONGO_URI=mongodb://localhost:27017
 ```
+
+
+
+
 
 ### 4. Start the Backend
 
