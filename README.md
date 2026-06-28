@@ -89,6 +89,9 @@ EvaluAI-Project-main/
 │       ├── ViewResults.js
 │       ├── LoadingOverlay.js
 │       └── assets/
+├── examples/                
+│   ├── example_exam.pdf
+│   └── example_rubric.docx
 ├── docker-compose.yml
 ├── package.json
 ├── .env / .env.example
@@ -289,7 +292,7 @@ The rubric is organized by questions. Each question contains several criterion�
 
 The complete rubric and exam are available in:
 
-- `examples/example_rubric.txt`
+- `examples/example_rubric.docx`
 - `examples/example_exam.pdf`
 
 These files allow users and reviewers to test the complete EvaluAI workflow without preparing their own assessment material.
@@ -318,6 +321,12 @@ Suggested testing procedure:
 * Pedro J. Clemente pjclemente@unex.es
 
 Quercus Software Engineering Group, Departamento de Ingeniería de Sistemas Informáticos y Telemáticos, Universidad de Extremadura, Avenida de la Universidad s/n, 10003 Cáceres, Spain
+
+**CRediT authorship contribution statement:**
+
+José A. Barriga: Conceptualization, Methodology, Supervision, Writing – review & editing. Jesús Moruno: Conceptualization, Writing – original draft, Software, Implementation, Validation. Arturo Barriga: Writing – original draft, Writing – review & editing. Julio D. Arjona: Writing – original draft, Writing – review & editing. Pedro J. Clemente: Conceptualization, Methodology, Supervision, Writing – review & editing, Funding acquisition.
+
+
 
 
 Academic use of EvaluAI should cite the associated SoftwareX paper.
