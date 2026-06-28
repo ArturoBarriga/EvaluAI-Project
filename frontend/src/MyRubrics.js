@@ -205,9 +205,10 @@ function MyRubrics({ user, onBack }) {
                     <input
                       className="criterion-edit-points"
                       type="number"
+                      step="0.01"
                       min={0}
                       value={criterion.points}
-                      onChange={e => handleCriterionEdit(questionIndex, index, "points", parseInt(e.target.value) || 0)}
+                      onChange={e => handleCriterionEdit(questionIndex, index, "points", e.target.value)}
                       placeholder="Points"
                       style={{
                         width: '70px',
