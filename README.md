@@ -198,7 +198,7 @@ docker compose down -v
 
 ## Installation and Execution Without Docker
 
-The system can also be executed manually.
+The system can also be executed manually. In this case, MongoDB must be running locally and the required environment variables must be configured in the `.env` file.
 
 ### 1. Clone the Repository
 
@@ -223,13 +223,29 @@ copy .env.example .env
 
 ### 3. Configure the Environment Variables
 
-Open `.env` and configure the Gemini API key:
+Open the `.env` file and configure the Gemini API key:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
+Although the Gemini API key is configured in the .env file, when running the backend manually it may be necessary to also define the environment variable in the same active terminal session used to start the server.
+
+Linux or macOS:
+
+```bash
+export GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+Windows CMD:
+
+```bash
+set GEMINI_API_KEY=your_gemini_api_key_here
+```
+
 ### 4. Start the Backend
+
+From the repository root, create the Python virtual environment inside the `backend/` folder:
 
 ```bash
 cd backend
@@ -250,16 +266,22 @@ Windows CMD:
 .venv\Scripts\activate
 ```
 
-Install dependencies:
+Install the backend dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Start the backend:
+Then return to the repository root:
 
 ```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+cd ..
+```
+
+Start the backend from the repository root:
+
+```bash
+python -m uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ### 5. Start the Frontend
