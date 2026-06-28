@@ -291,7 +291,7 @@ Open a new terminal from the repository root:
 ```bash
 cd frontend
 npm install
-npm run dev
+npm start
 ```
 
 Then open the frontend in your browser. Depending on the frontend configuration, the application will usually be available at:
