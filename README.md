@@ -276,14 +276,14 @@ Linux or macOS:
 
 ```bash
 export GEMINI_API_KEY=your_gemini_api_key_here
-export MONGO_URI=mongodb://localhost:27017
+export MONGODB_URI=mongodb://localhost:27017
 ```
 
 Windows CMD:
 
 ```cmd
 set GEMINI_API_KEY=your_gemini_api_key_here
-set MONGO_URI=mongodb://localhost:27017
+set MONGODB_URI=mongodb://localhost:27017
 ```
 
 Start the backend from the repository root:
