@@ -235,26 +235,6 @@ For local execution without Docker, MongoDB must be running on the host machine.
 MONGO_URI=mongodb://localhost:27017
 ```
 
-Although the Gemini API key and MongoDB connection are configured in the `.env` file, when running the backend manually it may be necessary to also define the environment variables in the same active terminal session used to start the server.
-
-Linux or macOS:
-
-```bash
-export GEMINI_API_KEY=your_gemini_api_key_here
-export MONGO_URI=mongodb://localhost:27017
-```
-
-Windows CMD:
-
-```cmd
-set GEMINI_API_KEY=your_gemini_api_key_here
-set MONGO_URI=mongodb://localhost:27017
-```
-
-
-
-
-
 ### 4. Start the Backend
 
 From the repository root, create the Python virtual environment inside the `backend/` folder:
@@ -288,6 +268,22 @@ Then return to the repository root:
 
 ```bash
 cd ..
+```
+
+Although the Gemini API key and MongoDB connection are configured in the `.env` file, when running the backend manually it may be necessary to also define the environment variables in the same active terminal session used to start the server.
+
+Linux or macOS:
+
+```bash
+export GEMINI_API_KEY=your_gemini_api_key_here
+export MONGO_URI=mongodb://localhost:27017
+```
+
+Windows CMD:
+
+```cmd
+set GEMINI_API_KEY=your_gemini_api_key_here
+set MONGO_URI=mongodb://localhost:27017
 ```
 
 Start the backend from the repository root:
