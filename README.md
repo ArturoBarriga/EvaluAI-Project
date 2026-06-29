@@ -134,12 +134,6 @@ Windows CMD:
 copy .env.example .env
 ```
 
-Windows PowerShell:
-
-```powershell
-Copy-Item .env.example .env
-```
-
 ### 3. Configure the Gemini API Key
 
 Open the `.env` file and set the Gemini API key:
