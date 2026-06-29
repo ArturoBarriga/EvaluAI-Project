@@ -102,19 +102,9 @@ The `examples/` folder contains an example exam that can be used to test the pla
 
 ## Requirements
 
-### Recommended: Docker Execution
-
 * Git
 * Docker Engine
 * Docker Compose v2
-* A valid Google Gemini API key
-
-### Local Execution Without Docker
-
-* Python 3.10 or later
-* Node.js 18 or later
-* npm
-* MongoDB
 * A valid Google Gemini API key
 
 For review purposes, a valid Gemini API key is provided with the artifact to allow reviewers to test the system without creating their own key.
@@ -194,124 +184,6 @@ To stop the application and remove stored data:
 
 ```bash
 docker compose down -v
-```
-
-## Installation and Execution Without Docker
-
-The system can also be executed manually. In this case, MongoDB must be running locally and the required environment variables must be configured in the `.env` file.
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/ArturoBarriga/EvaluAI-Project.git
-cd EvaluAI-Project
-```
-
-### 2. Create the Environment File
-
-Linux or macOS:
-
-```bash
-cp .env.example .env
-```
-
-Windows CMD:
-
-```cmd
-copy .env.example .env
-```
-
-### 3. Configure the Environment Variables
-
-Open the `.env` file and configure the Gemini API key:
-
-```env
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-For local execution without Docker, MongoDB must be running on the host machine. Therefore, the MongoDB connection string must point to `localhost`:
-
-```env
-MONGODB_URI=mongodb://localhost:27017/miappdb
-```
-
-### 4. Start the Backend
-
-From the repository root, create the Python virtual environment inside the `backend/` folder:
-
-```bash
-cd backend
-python -m venv .venv
-```
-
-Activate the virtual environment.
-
-Linux or macOS:
-
-```bash
-source .venv/bin/activate
-```
-
-Windows CMD:
-
-```cmd
-.venv\Scripts\activate
-```
-
-Install the backend dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Then return to the repository root:
-
-```bash
-cd ..
-```
-
-Although the Gemini API key and MongoDB connection are configured in the `.env` file, when running the backend manually it may be necessary to also define the environment variables in the same active terminal session used to start the server.
-
-Linux or macOS:
-
-```bash
-export GEMINI_API_KEY=your_gemini_api_key_here
-export MONGODB_URI=mongodb://localhost:27017/miappdb
-```
-
-Windows CMD:
-
-```cmd
-set GEMINI_API_KEY=your_gemini_api_key_here
-set MONGODB_URI=mongodb://localhost:27017/miappdb
-```
-
-Start the backend from the repository root:
-
-```bash
-python -m uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-### 5. Start the Frontend
-
-Open a new terminal from the repository root:
-
-```bash
-cd frontend
-npm install
-npm start
-```
-
-Then open the frontend in your browser. Depending on the frontend configuration, the application will usually be available at:
-
-```text
-http://localhost:3000
-```
-
-or:
-
-```text
-http://localhost:5173
 ```
 
 ## Example Exam and Rubric
