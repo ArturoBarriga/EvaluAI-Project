@@ -149,7 +149,9 @@ docker compose up -d --build
 docker compose ps
 ```
 
-### 6. Open the Application in a Web Browser
+### 6. Open the Application
+
+Once the containers are running, open the frontend in a web browser:
 
 ```text
 http://localhost:3000
@@ -157,11 +159,13 @@ http://localhost:3000
 
 ### 7. Stop the Application
 
+To stop the application while preserving stored data:
+
 ```bash
 docker compose down
 ```
 
-To stop the application and remove stored data:
+To stop the application and remove the stored Docker volumes/data:
 
 ```bash
 docker compose down -v
