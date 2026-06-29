@@ -211,7 +211,7 @@ Quercus Software Engineering Group, Departamento de Ingeniería de Sistemas Info
 
 **CRediT authorship contribution statement:**
 
-José A. Barriga: Conceptualization, Methodology, Supervision, Writing – review & editing. Jesús Moruno: Conceptualization, Writing – original draft, Software, Implementation, Validation. Arturo Barriga: Writing – original draft, Writing – review & editing. Julio D. Arjona: Writing – original draft, Writing – review & editing. Pedro J. Clemente: Conceptualization, Methodology, Supervision, Writing – review & editing, Funding acquisition.
+José A. Barriga: Conceptualization, Methodology, Supervision, Writing – review & editing. Jesús Moruno: Conceptualization, Writing – original draft, Software, Implementation, Validation. Arturo Barriga: Writing – original draft, Writing – review & editing. Julio D. Arjona: Writing – original draft, Writing – review & editing. Pedro J. Clemente: Conceptualization, Methodology, Supervision, Writing – review & editing, Funding acquisition, Project administration.
 
 
 
