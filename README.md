@@ -232,7 +232,7 @@ GEMINI_API_KEY=your_gemini_api_key_here
 For local execution without Docker, MongoDB must be running on the host machine. Therefore, the MongoDB connection string must point to `localhost`:
 
 ```env
-MONGODB_URI=mongodb://localhost:27017
+MONGODB_URI=mongodb://localhost:27017/miappdb
 ```
 
 ### 4. Start the Backend
@@ -276,14 +276,14 @@ Linux or macOS:
 
 ```bash
 export GEMINI_API_KEY=your_gemini_api_key_here
-export MONGODB_URI=mongodb://localhost:27017
+export MONGODB_URI=mongodb://localhost:27017/miappdb
 ```
 
 Windows CMD:
 
 ```cmd
 set GEMINI_API_KEY=your_gemini_api_key_here
-set MONGODB_URI=mongodb://localhost:27017
+set MONGODB_URI=mongodb://localhost:27017/miappdb
 ```
 
 Start the backend from the repository root:
