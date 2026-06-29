@@ -173,7 +173,7 @@ docker compose down -v
 
 ## Example Exam and Rubric
 
-The rubric and exam provided as examples are inspired by the subject **Design and Analysis of Algorithms**. They do not contain real student submissions and were created as synthetic materials for demonstration and reproducibility purposes.
+The rubric and exam provided as examples are inspired by the course Design and Analysis of Algorithms. They do not contain real student submissions and were created as synthetic materials for demonstration and reproducibility purposes.
 
 The rubric is organized by questions. Each question contains several criterion–point pairs that guide the LLM during the automated evaluation.
 
