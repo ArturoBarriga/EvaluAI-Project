@@ -34,9 +34,6 @@ EvaluAI follows a modular client-server architecture designed to separate the us
 
 * **Data Persistence Layer:** Implemented with MongoDB. The document-oriented database model allows EvaluAI to store flexible data structures such as rubrics, exam metadata, temporary corrections, and definitive results.
 
-
-
-
 ## Repository Structure
 
 The repository is organized into two main components: the backend, which provides the API and coordinates the automated evaluation workflow, and the frontend, which provides the web interface used by instructors. Additional configuration files are included to support Docker-based execution, environment configuration, and example-based testing.
@@ -107,8 +104,6 @@ The `examples/` folder contains an example exam that can be used to test the pla
 * Docker Compose v2
 * A valid Google Gemini API key
 
-For review purposes, a valid Gemini API key is provided with the artifact to allow reviewers to test the system without creating their own key.
-
 ## Installation and Execution with Docker
 
 Docker is the recommended way to run EvaluAI.
@@ -140,12 +135,6 @@ Open the `.env` file and set the Gemini API key:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-For peer review, a valid Gemini API key has been created specifically to allow reviewers to assess the tool without needing to generate their own key. The key includes a limited budget that is sufficient to execute the example workflow included in this repository:
-
-```env
-GEMINI_API_KEY= 
 ```
 
 ### 4. Start the Application
