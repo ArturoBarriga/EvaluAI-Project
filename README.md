@@ -160,9 +160,7 @@ docker compose up -d --build
 docker compose ps
 ```
 
-### 6. Open the Application
-
-Frontend:
+### 6. Open the Application in a Web Browser
 
 ```text
 http://localhost:3000
