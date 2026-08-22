@@ -1,6 +1,6 @@
-# EvaluAI SoftwareX Case Study
+# EvaluAI Case Study
 
-This directory contains the materials and experimental configuration associated with the validation study reported in Section 3.4, **“Validation and performance analysis,”** of the EvaluAI SoftwareX paper.
+This directory contains the materials and experimental configuration associated with the validation study reported in Section 3.4, **“Validation and performance analysis,”** of the associated paper.
 
 The purpose of this directory is to improve the transparency and reproducibility of the reported experiments by documenting the assessment materials, experimental conditions, prompt templates, LLM configuration, evaluation procedure, and output-handling strategy used in the case study.
 
@@ -8,59 +8,64 @@ The purpose of this directory is to improve the transparency and reproducibility
 
 The directory contains the following files:
 
-- `case_study_exam.pdf`: assessment used in the validation study.
-- `case_study_rubric.docx`: complete structured rubric used in the rubric-guided condition.
+- `case_study_exam.pdf and .docx`: assessment used in the validation study.
+- `case_study_rubric.pdf and .docx`: complete structured rubric used in the rubric-guided condition.
 - `README.md`: complete description of the experimental setup and reproduction information.
 
 No personally identifiable student information is included in the materials provided in this directory.
 
----
 
 ## 1. Participants and Student Submissions
 
-The validation involved **[TODO: N] students** enrolled in undergraduate Software Engineering courses.
+The validation involved 13 students enrolled in undergraduate Software Engineering courses.
 
-A total of **[TODO: N] student submissions** were included in the analysis.
+A total of 13 student submissions were included in the analysis. Each submission contained two parts of the exam, both of which were considered in the validation.
 
-The same students completed both parts of the assessment.
+The same 13 students completed both parts of the assessment.
 
-**Exclusions**
+No student submissions were excluded from the analysis.
 
-[TODO: choose and complete the appropriate statement.]
-
-Option A:
-
-> No student submissions were excluded from the analysis.
-
-Option B:
-
-> A total of [TODO: N] submissions were initially collected. [TODO: N] submissions were excluded because [TODO: reason], resulting in [TODO: N] submissions included in the final analysis.
-
----
 
 ## 2. Assessment Materials
 
-The complete assessment and rubric used in the case study are available in this directory:
+The complete assessment and rubric used in the case study are available in this directory in both PDF and Word formats:
 
 - [`case_study_exam.pdf`](case_study_exam.pdf)
+- [`case_study_exam.docx`](case_study_exam.docx)
+- [`case_study_rubric.pdf`](case_study_rubric.pdf)
 - [`case_study_rubric.docx`](case_study_rubric.docx)
 
 The rubric is organized by assessment question and contains the grading criteria and associated scores used by EvaluAI during rubric-guided evaluation.
 
-The materials included here correspond to the configuration used in the reported case study and are provided to make the experimental conditions inspectable and reproducible.
+The materials included here correspond to those used in the reported case study and are provided in both formats to facilitate inspection and reproducibility of the experimental setup.
 
----
 
 ## 3. Experimental Design
 
 Each student submission was evaluated under two experimental conditions:
 
-1. **Rubric-guided evaluation**
-2. **Evaluation without a structured rubric**
+1. **Evaluation without a structured rubric**
+2. **Rubric-guided evaluation**
 
 The same LLM and generation configuration were used in both conditions. The experimental difference was the grading information supplied to the model through the corresponding prompt.
 
-### 3.1. Rubric-Guided Evaluation
+### 3.1. Evaluation Without a Structured Rubric
+
+In this condition, the student submissions were evaluated without providing the structured digital rubric.
+
+The exact prompt template used in the reported experiment is reproduced below.
+
+```text
+[TODO: INSERT THE EXACT NON-RUBRIC PROMPT USED IN THE EXPERIMENT]
+
+Important:
+- Reproduce the prompt exactly as used in the experiment.
+- Preserve the original instructions and ordering.
+- Preserve placeholders used by the implementation.
+- Do not simplify or rewrite the prompt for documentation purposes.
+```
+
+### 3.2. Rubric-Guided Evaluation
 
 In the rubric-guided condition, EvaluAI provided the LLM with the assessment context, the student submission, and the structured digital rubric containing the grading criteria and associated scores.
 
@@ -76,23 +81,6 @@ Important:
 - Do not simplify or rewrite the prompt for documentation purposes.
 ```
 
-### 3.2. Evaluation Without a Structured Rubric
-
-In the comparison condition, the same student submission was evaluated without providing the structured digital rubric.
-
-The exact prompt template used in the reported experiment is reproduced below.
-
-```text
-[TODO: INSERT THE EXACT NON-RUBRIC PROMPT USED IN THE EXPERIMENT]
-
-Important:
-- Reproduce the prompt exactly as used in the experiment.
-- Preserve the original instructions and ordering.
-- Preserve placeholders used by the implementation.
-- Do not simplify or rewrite the prompt for documentation purposes.
-```
-
----
 
 ## 4. LLM and Generation Configuration
 
@@ -132,7 +120,7 @@ Example:
 Google Generative AI Python SDK: [TODO: package/version]
 ```
 
----
+
 
 ## 5. Repeated Evaluations
 
@@ -150,7 +138,7 @@ Each student submission was evaluated **[TODO: N] time(s)** under each experimen
 
 The same repetition procedure was applied to both conditions.
 
----
+
 
 ## 6. Experimental Procedure
 
@@ -180,7 +168,7 @@ No manual modification of the AI-generated grades should be included in the expe
 
 [TODO: Verify the previous sentence against the actual experimental procedure and replace it if necessary.]
 
----
+
 
 ## 7. Output Format and Parsing
 
@@ -205,7 +193,7 @@ Feedback: <textual feedback>
 
 Do not document an output schema that was not actually enforced in the reported experiments.
 
----
+
 
 ## 8. Malformed Outputs and API Failure Handling
 
@@ -254,7 +242,7 @@ If none occurred, state this explicitly:
 
 > No malformed outputs, parsing failures, or API failures occurred during the reported experiments.
 
----
+
 
 ## 9. Reference Grades and Evaluation Metrics
 
@@ -268,74 +256,4 @@ The reported results show that rubric-guided evaluation achieved closer agreemen
 
 [TODO: Add any additional metrics reported in the manuscript if applicable.]
 
----
 
-## 10. Scope of the Experimental Comparison
-
-The reported experiment compares the complete rubric-guided evaluation workflow against LLM evaluation without the structured rubric.
-
-The comparison therefore evaluates the effect of providing the rubric-guided assessment context as implemented in EvaluAI.
-
-However, the experiment does **not** independently isolate the effect of the structured representation of the rubric from the additional grading information contained in the rubric.
-
-A more fine-grained ablation study comparing:
-
-1. a minimal grading prompt,
-2. unstructured instructor grading guidance, and
-3. a structured digital rubric,
-
-would allow the effect of rubric formalization to be isolated more precisely.
-
-Such a comparison is considered future work.
-
----
-
-## 11. Reproducibility Notes
-
-The materials in this directory are intended to make the experimental setup reported in the SoftwareX paper inspectable and reproducible.
-
-To reproduce the case study as closely as possible, use:
-
-- the assessment in `case_study_exam.pdf`;
-- the rubric in `case_study_rubric.docx`;
-- the exact prompts reproduced in this README;
-- the same Gemini model identifier;
-- the same generation parameters;
-- the same number of evaluations per submission;
-- the same output-processing and failure-handling procedure.
-
-Because cloud-based LLM services may evolve over time, exact numerical reproduction can be affected by provider-side model updates, API changes, or non-deterministic model behavior.
-
-[TODO: If a dated model version or immutable model identifier was used, state it explicitly above.]
-
----
-
-## 12. Privacy and Data Availability
-
-The assessment and rubric are provided for reproducibility purposes.
-
-Real student submissions are **not** included in this repository.
-
-No personally identifiable student information is provided.
-
-[TODO: If anonymized student-level experimental results are published elsewhere in the repository, describe their location here.]
-
----
-
-## 13. Citation
-
-Academic use of these materials should cite the associated EvaluAI SoftwareX paper.
-
-[TODO: Replace this section with the complete citation once the paper is published.]
-
-```text
-EvaluAI: An open-source LLM-based framework for automated evaluation
-of student artifacts and feedback generation.
-SoftwareX.
-```
-
----
-
-## 14. Contact
-
-For questions regarding the case study or reproducibility materials, please contact the authors through the main EvaluAI repository.
