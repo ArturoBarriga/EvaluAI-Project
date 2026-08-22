@@ -17,7 +17,7 @@ function HomeLayout() {
           >
             <img
               src={logo}
-              alt="EvaluIA Logo"
+              alt="EvaluAI Logo"
               height={40}
               style={{ marginRight: 10, borderRadius: 6 }}
             />

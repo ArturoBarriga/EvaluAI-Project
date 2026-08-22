@@ -9,9 +9,9 @@ function Navbar({ onLogout }) {
       <div className="navbar-container">
         <div className="navbar-brand">
           <Link to="/teacher-dashboard" className="navbar-logo-link" aria-label="Home">
-            <img src={logoImg} alt="EvaluIA Logo" className="navbar-logo" />
+            <img src={logoImg} alt="EvaluAI Logo" className="navbar-logo" />
           </Link>
-          <span className="navbar-brand-name">EvaluIA</span>
+          <span className="navbar-brand-name">EvaluAI</span>
         </div>
 
         <div className="navbar-actions">

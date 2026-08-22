@@ -1,7 +1,7 @@
 services:
   mongo:
     image: mongo:7
-    container_name: evaluia-mongo
+    container_name: evaluai-mongo
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-root}
@@ -20,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: ./backend/Dockerfile
-    container_name: evaluia-backend
+    container_name: evaluai-backend
     restart: unless-stopped
     ports:
       - "8000:8000"
@@ -35,7 +35,7 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: evaluia-frontend
+    container_name: evaluai-frontend
     restart: unless-stopped
     ports:
       - "3000:80"
