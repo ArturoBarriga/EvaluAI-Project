@@ -19,12 +19,13 @@ No personally identifiable student information is included in the materials prov
 
 The validation involved 13 students enrolled in undergraduate Software Engineering courses.
 
+Participation in the study was voluntary. Students were informed about the possibility of participating, and the exams of those who agreed to participate were included in the study.
+
 A total of 13 student submissions were included in the analysis. Each submission contained two parts of the exam, both of which were considered in the validation.
 
 The same 13 students completed both parts of the assessment.
 
 No student submissions were excluded from the analysis.
-
 
 ## 2. Assessment Materials
 
@@ -56,13 +57,38 @@ In this condition, the student submissions were evaluated without providing the 
 The exact prompt template used in the reported experiment is reproduced below.
 
 ```text
-[TODO: INSERT THE EXACT NON-RUBRIC PROMPT USED IN THE EXPERIMENT]
+Grade the exam according to the instructions and rubric (if provided).
 
-Important:
-- Reproduce the prompt exactly as used in the experiment.
-- Preserve the original instructions and ordering.
-- Preserve placeholders used by the implementation.
-- Do not simplify or rewrite the prompt for documentation purposes.
+Additional teacher instructions:
+Do not penalize minor grammatical or spelling errors unless they affect the clarity or meaning of the response.
+
+If a question has no student answer, explicitly indicate it in the "answer" field with the value "No answer", add a clarifying comment, and assign a score of 0.
+
+If you detect a block of code or a complex mathematical expression in the student answer, it is not necessary to transcribe it literally. Instead, provide a brief and clear summary of the function or purpose of that code or expression.
+
+If the exam content or the student answers are written in Spanish, translate them into natural academic English in the output.
+Specifically, the fields "statement", "answer", "comments", and "general_comment" must always be written in English, even if the original exam is in Spanish.
+Preserve the original meaning faithfully and do not omit relevant technical details.
+Do not keep the transcription in Spanish unless a technical term, identifier, or code element must remain unchanged.
+
+Output format:
+Return EXCLUSIVELY a JSON object with this structure:
+{
+  "correction": [
+    {
+      "question": "question number or name",
+      "statement": "literal text",
+      "answer": "detected answer or 'No answer'",
+      "max_score": maximum score for the question,
+      "assigned_score": the score you assign to the student answer,
+      "comments": "correction made to the student exercise and what they need to improve to obtain the maximum score for that exercise"
+    }
+  ],
+  "student_name": "name of the student who took the exam; if not detected leave blank; format: LastName1 LastName2, FirstName",
+  "general_comment": "General analysis summarizing performance, strengths, areas for improvement, and recommendations."
+}
+All numeric values must be unquoted numbers.
+Do not include anything outside that JSON.
 ```
 
 ### 3.2. Rubric-Guided Evaluation
@@ -72,13 +98,56 @@ In the rubric-guided condition, EvaluAI provided the LLM with the assessment con
 The exact prompt template used in the reported experiment is reproduced below.
 
 ```text
-[TODO: INSERT THE EXACT RUBRIC-GUIDED PROMPT USED IN THE EXPERIMENT]
+Grade the exam according to the instructions and rubric (if provided).
 
-Important:
-- Reproduce the prompt exactly as used by EvaluAI.
-- Preserve the original instructions and ordering.
-- Preserve placeholders such as {rubric}, {exam}, {question}, or equivalent variables.
-- Do not simplify or rewrite the prompt for documentation purposes.
+Use the following rubric:
+
+Question: Identify well-known algorithms that solve this optimization problem. Briefly describe each one and justify its suitability for meeting the company’s requirements.
+- Correctly identifies Prim’s and Kruskal’s algorithms as appropriate algorithms for this optimization problem. (0.4 points)
+- Avoids mentioning clearly inappropriate algorithms for this task, such as DFS or BFS as direct solutions to the optimization problem. (0.2 points)
+- Correctly explains Prim’s algorithm as starting from a vertex and growing the minimum spanning tree by repeatedly selecting the minimum-weight adjacent edge. (0.15 points)
+- Correctly explains Kruskal’s algorithm as constructing the minimum spanning tree by adding edges in increasing order of weight. (0.15 points)
+- Recognizes that cycles must not be formed in either approach. (0.05 points)
+- Correctly addresses the time complexity, avoiding incorrect claims such as stating that both algorithms are O(n). (0.05 points)
+
+Question: Implement an algorithm that, given the optimized circuit obtained in the previous section, identifies the two pins whose distance, defined as the length of the shortest path between them, is maximum. The algorithm must return that distance and the intermediate pins forming the shortest path between the corresponding pair of pins. The code must include comments explaining how it works. Show an example of how to call the algorithm from a main program, specifying the initial parameter values.
+- Correctly understands the objective of the problem: find the pair of pins whose shortest-path distance is maximum. (0.8 points)
+- Uses an appropriate shortest-path strategy to solve the problem. (0.7 points)
+- Correctly reconstructs and returns the intermediate pins forming the corresponding shortest path. (0.6 points)
+- Provides a coherent and functional implementation. (0.4 points)
+- Includes explanatory comments in the code. (0.2 points)
+- Includes an example of how to call the algorithm from a main program, specifying the initial parameter values. (0.3 points)
+
+Additional teacher instructions:
+Do not penalize minor grammatical or spelling errors unless they affect the clarity or meaning of the response.
+
+If a question has no student answer, explicitly indicate it in the "answer" field with the value "No answer", add a clarifying comment, and assign a score of 0.
+
+If you detect a block of code or a complex mathematical expression in the student answer, it is not necessary to transcribe it literally. Instead, provide a brief and clear summary of the function or purpose of that code or expression.
+
+If the exam content or the student answers are written in Spanish, translate them into natural academic English in the output.
+Specifically, the fields "statement", "answer", "comments", and "general_comment" must always be written in English, even if the original exam is in Spanish.
+Preserve the original meaning faithfully and do not omit relevant technical details.
+Do not keep the transcription in Spanish unless a technical term, identifier, or code element must remain unchanged.
+
+Output format:
+Return EXCLUSIVELY a JSON object with this structure:
+{
+  "correction": [
+    {
+      "question": "question number or name",
+      "statement": "literal text",
+      "answer": "detected answer or 'No answer'",
+      "max_score": maximum score for the question,
+      "assigned_score": the score you assign to the student answer,
+      "comments": "correction made to the student exercise and what they need to improve to obtain the maximum score for that exercise"
+    }
+  ],
+  "student_name": "name of the student who took the exam; if not detected leave blank; format: LastName1 LastName2, FirstName",
+  "general_comment": "General analysis summarizing performance, strengths, areas for improvement, and recommendations."
+}
+All numeric values must be unquoted numbers.
+Do not include anything outside that JSON.
 ```
 
 
@@ -89,171 +158,24 @@ The experiments were performed using the following LLM configuration.
 | Parameter | Configuration |
 | --- | --- |
 | Provider | Google |
-| Model | Gemini 2.0 Flash |
-| Exact model identifier | `[TODO]` |
-| API / API version | `[TODO: exact version if explicitly available]` |
-| Temperature | `[TODO: value or provider default]` |
-| Top-p | `[TODO: value or provider default]` |
-| Top-k | `[TODO: value or provider default]` |
-| Maximum output tokens | `[TODO: value or provider default]` |
-| Other generation parameters | `[TODO: values or provider defaults]` |
+| Model | Gemini 2.5 Flash |
+| Exact model identifier | `gemini-2.5-flash` |
+| SDK | Google Generative AI Python SDK (`google.generativeai`) |
+| Temperature | `0.3` |
+| Top-p | Provider default |
+| Top-k | Provider default |
+| Maximum output tokens | `8000` |
+| Other generation parameters | Provider defaults |
 
-Only parameters explicitly configured during the experiment should be reported as fixed values.
+Only `temperature` and `max_output_tokens` were explicitly configured by EvaluAI. Other generation parameters, including `top_p` and `top_k`, were not explicitly specified and therefore used the defaults provided by the Google Gemini API. The same model and generation configuration were used throughout the reported evaluation. 
 
-If a parameter was not explicitly configured by EvaluAI, document it as:
+The implementation used the Google Gemini API through the Google Generative AI Python SDK (`google.generativeai`). The model was instantiated using the exact identifier `gemini-2.5-flash`.
 
-```text
-provider default
-```
+## 5. Malformed Outputs and API Failure Handling
 
-rather than assigning a value retrospectively.
+EvaluAI expects the LLM to return a structured JSON response. The system first attempts to extract JSON from a Markdown `json` code block and, if this is not available, searches the response for a JSON object or array. The extracted content is then cleaned and parsed using Python's `json` library.
 
-### 4.1. Provider Interaction
+If the response is empty, does not contain valid JSON, or cannot be parsed, the evaluation is considered unsuccessful. For PDF-based evaluation, EvaluAI also checks whether the response was truncated because the maximum token limit was reached (`MAX_TOKENS`) and raises an error in this case.
 
-The reported implementation used the Google Gemini API to perform LLM-based evaluation.
-
-[TODO: If applicable, briefly specify the SDK/library and version used to access the API.]
-
-Example:
-
-```text
-Google Generative AI Python SDK: [TODO: package/version]
-```
-
-
-
-## 5. Repeated Evaluations
-
-Each student submission was evaluated **[TODO: N] time(s)** under each experimental condition.
-
-[TODO: choose the statement that reflects the actual experiment.]
-
-### If each submission was evaluated once
-
-> Each submission was evaluated once under each experimental condition.
-
-### If each submission was evaluated multiple times
-
-> Each submission was independently evaluated [TODO: N] times under each experimental condition. The reported performance metrics were calculated using [TODO: explain whether all runs, averages, medians, or another aggregation procedure were used].
-
-The same repetition procedure was applied to both conditions.
-
-
-
-## 6. Experimental Procedure
-
-For each student submission, the following procedure was followed.
-
-### Rubric-guided condition
-
-1. The student submission was provided to EvaluAI.
-2. The structured rubric associated with the assessment was selected.
-3. EvaluAI constructed the rubric-guided prompt.
-4. The prompt and submission were sent to Gemini 2.0 Flash.
-5. The generated score and feedback were returned by the model.
-6. The model output was processed by EvaluAI.
-7. The generated grade was compared with the instructor-assigned grade for the validation analysis.
-
-### Non-rubric condition
-
-1. The same student submission was used.
-2. The structured rubric was not provided to the model.
-3. EvaluAI constructed the corresponding non-rubric prompt.
-4. The prompt and submission were sent to the same Gemini 2.0 Flash model.
-5. The generated score and feedback were returned by the model.
-6. The model output was processed using the same output-processing procedure.
-7. The generated grade was compared with the instructor-assigned grade.
-
-No manual modification of the AI-generated grades should be included in the experimental comparison unless such modification was explicitly part of the reported protocol.
-
-[TODO: Verify the previous sentence against the actual experimental procedure and replace it if necessary.]
-
-
-
-## 7. Output Format and Parsing
-
-The expected LLM output followed the format defined in the prompt templates reproduced above.
-
-[TODO: Describe the exact expected output structure.]
-
-For example:
-
-```text
-[TODO: insert representative expected output schema or format]
-```
-
-If the implementation required structured fields, document them explicitly.
-
-Example:
-
-```text
-Score: <numeric score>
-Feedback: <textual feedback>
-```
-
-Do not document an output schema that was not actually enforced in the reported experiments.
-
-
-
-## 8. Malformed Outputs and API Failure Handling
-
-The following procedures describe how EvaluAI handled malformed responses and API failures during the reported experiments.
-
-### 8.1. Malformed or Incomplete Model Outputs
-
-[TODO: Describe the actual behavior.]
-
-Examples of information to report:
-
-- whether the response was rejected;
-- whether parsing was retried;
-- whether the model was queried again;
-- whether a default value was assigned;
-- whether the submission was excluded;
-- whether the output was manually inspected.
-
-### 8.2. Output Parsing Failures
-
-[TODO: Describe the actual procedure followed when the returned model output could not be parsed.]
-
-### 8.3. Gemini API Failures
-
-[TODO: Describe the actual behavior when an API request failed.]
-
-Examples:
-
-- automatic retry;
-- manual re-execution;
-- no retry;
-- request discarded;
-- error propagated to the user.
-
-### 8.4. Retry Policy
-
-[TODO: State the number of retries, delay strategy, or explicitly state that no automatic retry mechanism was used.]
-
-### 8.5. Failures Observed During the Experiment
-
-- Malformed or incomplete outputs observed: **[TODO: N]**
-- Output parsing failures observed: **[TODO: N]**
-- API failures observed: **[TODO: N]**
-
-If none occurred, state this explicitly:
-
-> No malformed outputs, parsing failures, or API failures occurred during the reported experiments.
-
-
-
-## 9. Reference Grades and Evaluation Metrics
-
-The AI-generated grades were compared with grades assigned by the course instructor(s).
-
-[TODO: If more than one human grader participated, describe how reference grades were obtained.]
-
-The validation reported in the paper uses Mean Absolute Error (MAE) to quantify the difference between the AI-generated grades and the instructor-assigned grades.
-
-The reported results show that rubric-guided evaluation achieved closer agreement with instructor grading than evaluation without the structured rubric, reaching MAE values as low as **0.15** and reducing the error by up to **70%** in the evaluated scenario.
-
-[TODO: Add any additional metrics reported in the manuscript if applicable.]
-
+For image-based evaluation, unsuccessful requests are automatically retried up to three times, with an increasing delay between attempts. After the final unsuccessful attempt, no result is returned. PDF-based evaluation does not implement an internal retry loop; errors are propagated to the calling layer.
 
