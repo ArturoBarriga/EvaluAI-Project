@@ -36,7 +36,7 @@ EvaluAI follows a modular client-server architecture designed to separate the us
 
 ## Repository Structure
 
-The repository is organized into two main components: the backend, which provides the API and coordinates the automated evaluation workflow, and the frontend, which provides the web interface used by instructors. Additional configuration files are included to support Docker-based execution, environment configuration, and example-based testing.
+The repository is organized into two main components: the backend, which provides the API and coordinates the automated evaluation workflow, and the frontend, which provides the web interface used by instructors. Additional directories contain synthetic examples for testing the platform and the materials and experimental configuration associated with the case study. Configuration files are also included to support Docker-based execution and environment setup.
 
 ```text
 EvaluAI-Project-main/
@@ -87,8 +87,16 @@ EvaluAI-Project-main/
 │       ├── LoadingOverlay.js
 │       └── assets/
 ├── examples/                
-│   ├── example_exam.pdf
-│   └── example_rubric.docx
+│   ├── example_exam.docx
+|   ├── example_exam.pdf
+│   ├── example_rubric.docx
+│   └── example_rubric.pdf
+├── case-study/
+│   ├── README.md
+│   ├── case_study_exam.docx
+│   ├── case_study_exam.pdf
+│   ├── case_study_rubric.docx
+│   └── case_study_rubric.pdf
 ├── docker-compose.yml
 ├── package.json
 ├── .env / .env.example
@@ -179,7 +187,7 @@ The rubric is organized by questions. Each question contains several criterion�
 
 The complete rubric and exam are available in:
 
-- `examples/example_rubric.docx`
+- `examples/example_rubric.pdf`
 - `examples/example_exam.pdf`
 
 These files allow users and reviewers to test the complete EvaluAI workflow without preparing their own assessment material.
