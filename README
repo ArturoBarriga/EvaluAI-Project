@@ -1,6 +1,6 @@
 # EvaluAI SoftwareX Case Study
 
-This directory contains the materials and experimental configuration associated with the validation study reported in Section 3.4, **“Validation and performance analysis,”** of the EvaluAI SoftwareX paper.
+This directory contains the materials and experimental configuration associated with the validation study reported in Section 3.4, **“Validation and performance analysis,”** of the EvaluAI SoftwareX paper. 
 
 The purpose of this directory is to improve the transparency and reproducibility of the reported experiments by documenting the assessment materials, experimental conditions, prompt templates, LLM configuration, evaluation procedure, and output-handling strategy used in the case study.
 
