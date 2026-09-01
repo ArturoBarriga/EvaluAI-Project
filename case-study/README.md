@@ -184,3 +184,28 @@ If the response is empty, does not contain valid JSON, or cannot be parsed, the 
 
 For image-based evaluation, unsuccessful requests are automatically retried up to three times, with an increasing delay between attempts. After the final unsuccessful attempt, no result is returned. PDF-based evaluation does not implement an internal retry loop; errors are propagated to the calling layer.
 
+
+### 6.1. Observed operational metrics
+
+The following metrics were recorded during the six repeated batch evaluations of the 13 student submissions (13 submissions × 3 executions × 2 conditions = 78 LLM evaluations in total).
+
+- **Processing time.** Median inter-submission time of ≈ 25 s in the no-rubric runs (per-run medians: 32 s, 25 s, 23 s) and ≈ 21 s in the rubric-guided runs (21 s, 22 s, 21 s). Uninterrupted intervals ranged from 14 to 63 s. A complete 13-submission batch finished in 4.5–7.5 minutes. Evaluations are dispatched sequentially by the orchestrator, parallel dispatch is a straightforward scalability improvement.
+- **Execution success rate.** All 78 evaluations returned valid structured JSON and produced an evaluation report (78/78 successful). The handling of malformed outputs and API failures is described in Section 5.
+
+### 6.2. Cost model
+
+The cost of one evaluation can be estimated as:
+
+```
+C = (P_in / 10^6) · (T_prompt + T_rubric + T_doc)  +  (P_out / 10^6) · (T_answer + T_thinking)
+```
+
+**Token accounting (Gemini API):**
+
+- PDF inputs: each page is billed as a fixed 258 input tokens, independently of its content, i.e. `T_doc = 258 · p` for a `p`-page submission.
+- Image inputs (scanned pages sent as PNG): images with both dimensions ≤ 384 px are billed as 258 tokens; larger images are tiled into 768 × 768 crops billed at 258 tokens per tile (a typical scanned page corresponds to roughly 4–8 tiles).
+- Measured in this case study: prompt template ≈ 500 tokens in the no-rubric condition and ≈ 1,050 tokens in the rubric-guided condition (including the complete three-question rubric, ≈ 560 tokens); visible output per evaluation: median ≈ 775–810 tokens, maximum ≈ 1,000 tokens. Thinking tokens are billed as output tokens and vary per request; total output is bounded by the configured `max_output_tokens = 8000`.
+
+**Prices** (Gemini 2.5 Flash, Standard paid tier; list prices verified in August 2026 and subject to change): `P_in` = $0.30 and `P_out` = $2.50 per million tokens. The Batch API offers both at a 50% discount for non-interactive workloads.
+
+**Worked example** (rubric-guided evaluation of a 4-page PDF submission): input ≈ 1,050 + 258 · 4 ≈ 2,080 tokens ≈ $0.0006; output ≈ 775 visible tokens plus thinking tokens (assuming 500–1,500) ≈ $0.003–0.006. The typical total cost is therefore **below $0.01 per submission**, with a hard upper bound of ≈ $0.021 imposed by the maximum output length. Evaluating a full 13-submission batch costs on the order of $0.05–0.10.
