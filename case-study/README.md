@@ -8,8 +8,8 @@ The purpose of this directory is to improve the transparency and reproducibility
 
 The directory contains the following files:
 
-- `case_study_exam.pdf and .docx`: assessment used in the validation study.
-- `case_study_rubric.pdf and .docx`: complete structured rubric used in the rubric-guided condition.
+- `exam_EN.pdf and exam_ES.pdf`: assessment used in the validation study.
+- `rubric_EN.pdf and rubric_ES.pdf`: complete structured rubric used in the rubric-guided condition.
 - `README.md`: complete description of the experimental setup and reproduction information.
 
 No personally identifiable student information is included in the materials provided in this directory.
@@ -17,24 +17,23 @@ No personally identifiable student information is included in the materials prov
 
 ## 1. Participants and Student Submissions
 
-The validation involved 13 students enrolled in undergraduate Software Engineering courses.
+The validation involved 14 students enrolled in undergraduate Software Engineering courses. 
 
 Participation in the study was voluntary. Students were informed about the possibility of participating, and the exams of those who agreed to participate were included in the study.
 
-A total of 13 student submissions were included in the analysis. Each submission contained two parts of the exam, both of which were considered in the validation.
+One submission was excluded because its corresponding instructor score could not be retrieved from the original grading records, leaving 13 submissions for analysis.
 
-The same 13 students completed both parts of the assessment.
+The same 13 students completed the different parts of the assessment.
 
-No student submissions were excluded from the analysis.
 
 ## 2. Assessment Materials
 
-The complete assessment and rubric used in the case study are available in this directory in both PDF and Word formats:
+The complete assessment and rubric used in the case study are available in this directory in PDF format both in the original version in Spanish (ES) and translated to English (EN):
 
-- [`case_study_exam.pdf`](case_study_exam.pdf)
-- [`case_study_exam.docx`](case_study_exam.docx)
-- [`case_study_rubric.pdf`](case_study_rubric.pdf)
-- [`case_study_rubric.docx`](case_study_rubric.docx)
+- [`exam_EN.pdf`](exam_EN.pdf)
+- [`exam_ES.pdf`](exam_ES.pdf)
+- [`rubric_EN.pdf`](rubric_EN.pdf)
+- [`rubric_ES.pdf`](rubric_ES.pdf)
 
 The rubric is organized by assessment question and contains the grading criteria and associated scores used by EvaluAI during rubric-guided evaluation.
 
