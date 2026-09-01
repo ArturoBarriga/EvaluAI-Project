@@ -10,7 +10,7 @@ EvaluAI does not automatically redact identifiers from submissions, anonymizatio
 
 ## Provider data-use terms
 
-Under the **paid tier** of the Gemini API, Google states that submitted content is **not used to improve its products**; under the **free tier, it is** (see Google's official Gemini API pricing/terms; verified August 2026 — terms may change). **Deployments processing student work must use a paid-tier API key.** For institutions that require stricter guarantees or data residency, the modular LLM-client layer allows integrating an institutionally hosted or region-constrained model instead. Assessing the data-use terms of any alternative provider integrated through this layer is the responsibility of the deploying institution.
+Under the **paid tier** of the Gemini API, Google states that submitted content is **not used to improve its products**; under the **free tier, it is** (see Google's official Gemini API pricing/terms, verified August 2026, terms may change). **Deployments processing student work must use a paid-tier API key.** For institutions that require stricter guarantees or data residency, the modular LLM-client layer allows integrating an institutionally hosted or region-constrained model instead. Assessing the data-use terms of any alternative provider integrated through this layer is the responsibility of the deploying institution.
 
 ## Storage, retention, deletion, and logging
 
