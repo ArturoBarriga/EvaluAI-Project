@@ -8,8 +8,8 @@ The purpose of this directory is to improve the transparency and reproducibility
 
 The directory contains the following files:
 
-- `exam_EN.pdf and exam_ES.pdf`: assessment used in the validation study.
-- `rubric_EN.pdf and rubric_ES.pdf`: complete structured rubric used in the rubric-guided condition.
+- `exam_EN.pdf` and `exam_ES.pdf`: assessment used in the validation study.
+- `rubric_EN.pdf` and `rubric_ES.pdf`: complete structured rubric used in the rubric-guided condition.
 - `README.md`: complete description of the experimental setup and reproduction information.
 
 No personally identifiable student information is included in the materials provided in this directory.
@@ -23,12 +23,12 @@ Participation in the study was voluntary. Students were informed about the possi
 
 One submission was excluded because its corresponding instructor score could not be retrieved from the original grading records, leaving 13 submissions for analysis.
 
-The same 13 students completed the different parts of the assessment.
+The same set of 13 students was used consistently across the analysis of all assessment questions included in the case study.
 
 
 ## 2. Assessment Materials
 
-The complete assessment and rubric used in the case study are available in this directory in PDF format both in the original version in Spanish (ES) and translated to English (EN):
+The complete assessment and rubric used in the case study are available in this directory in PDF format, both in the original Spanish version (ES) and in an English translation (EN):
 
 - [`exam_EN.pdf`](exam_EN.pdf)
 - [`exam_ES.pdf`](exam_ES.pdf)
@@ -47,7 +47,7 @@ Each student submission was evaluated under two experimental conditions:
 1. **Evaluation without a structured rubric**
 2. **Rubric-guided evaluation**
 
-The same LLM and generation configuration were used in both conditions. The experimental difference was the grading information supplied to the model through the corresponding prompt.
+Each of the 13 student submissions was independently evaluated three times under each experimental condition to account for the non-deterministic behavior of the LLM. This resulted in three repeated evaluations per submission and condition, using the same model and generation configuration across all executions.
 
 ### 3.1. Evaluation Without a Structured Rubric
 
@@ -101,21 +101,27 @@ Grade the exam according to the instructions and rubric (if provided).
 
 Use the following rubric:
 
-Question: Identify well-known algorithms that solve this optimization problem. Briefly describe each one and justify its suitability for meeting the company’s requirements.
-- Correctly identifies Prim’s and Kruskal’s algorithms as appropriate algorithms for this optimization problem. (0.4 points)
-- Avoids mentioning clearly inappropriate algorithms for this task, such as DFS or BFS as direct solutions to the optimization problem. (0.2 points)
-- Correctly explains Prim’s algorithm as starting from a vertex and growing the minimum spanning tree by repeatedly selecting the minimum-weight adjacent edge. (0.15 points)
-- Correctly explains Kruskal’s algorithm as constructing the minimum spanning tree by adding edges in increasing order of weight. (0.15 points)
-- Recognizes that cycles must not be formed in either approach. (0.05 points)
-- Correctly addresses the time complexity, avoiding incorrect claims such as stating that both algorithms are O(n). (0.05 points)
+Question: Describe the data structures needed to model this problem. Define the relevant variables and provide a graphical representation of these structures.
+- Recognizes that a graph must be used. (0.5 points)
+- Recognizes structures (adjacency matrix or adjacency set) as suitable for implementing it. (0.4 points)
+- Recognizes that the edges must be weighted. (0.4 points)
+- Recognizes vertices as pins and edges as cables (even if not stated explicitly). (0.3 points)
+- Provides a graphical representation of the structures. (0.4 points)
 
-Question: Implement an algorithm that, given the optimized circuit obtained in the previous section, identifies the two pins whose distance, defined as the length of the shortest path between them, is maximum. The algorithm must return that distance and the intermediate pins forming the shortest path between the corresponding pair of pins. The code must include comments explaining how it works. Show an example of how to call the algorithm from a main program, specifying the initial parameter values.
-- Correctly understands the objective of the problem: find the pair of pins whose shortest-path distance is maximum. (0.8 points)
-- Uses an appropriate shortest-path strategy to solve the problem. (0.7 points)
-- Correctly reconstructs and returns the intermediate pins forming the corresponding shortest path. (0.6 points)
-- Provides a coherent and functional implementation. (0.4 points)
-- Includes explanatory comments in the code. (0.2 points)
-- Includes an example of how to call the algorithm from a main program, specifying the initial parameter values. (0.3 points)
+Question: State known algorithms that solve this optimization problem. Briefly describe each algorithm and justify its suitability for meeting the company's requirements.
+- Mentions Prim and Kruskal as suitable algorithms. (0.3 points)
+- Does not mention unrelated algorithms (e.g. DFS/BFS). (0.1 points)
+- Correctly defines Prim (random starting vertex + lowest-weight adjacent edge). (0.2 points)
+- Correctly defines Kruskal (adds lowest-weight edges globally). (0.2 points)
+- Recognizes that neither algorithm can form cycles. (0.1 points)
+- Recognizes the complexity of both algorithms. (0.1 points)
+
+Question: Implement an algorithm that, given the optimized circuit resulting from the previous section, identifies the two pins whose distance, defined as the length of the shortest path between them, is maximum. The algorithm must return this distance and the intermediate pins that make up the shortest path between the corresponding pair of pins. The code must include comments explaining how it works. Show an example call to the algorithm from a main program, specifying the initial parameter values.
+- Solves it with an optimal approach based on BFS or DFS. (0.6 points)
+- Solves it with a non-optimal approach based on Floyd-Warshall. (0.4 points)
+- If using Floyd-Warshall, implements the Path function to obtain intermediate vertices (not just mentions it). (0.5 points)
+- Comments the code sufficiently well. (0.5 points)
+- The code is free of errors. (1 points)
 
 Additional teacher instructions:
 Do not penalize minor grammatical or spelling errors unless they affect the clarity or meaning of the response.
