@@ -21,6 +21,12 @@ A video demonstration of the application workflow and main features is available
 
 https://youtu.be/0obclKtnpmQ
 
+
+## Privacy and Security
+
+EvaluAI processes student submissions and may transmit assessment content to the configured external LLM provider. For details on data flows, anonymization, provider data-use terms, storage and retention, encryption, authentication and authorization, prompt-injection considerations, and the privacy measures followed in the reported validation, see [`PRIVACY_AND_SECURITY.md`](PRIVACY_AND_SECURITY.md).
+
+
 ## System Architecture
 
 EvaluAI follows a modular client-server architecture designed to separate the user interface, application logic, data persistence, and external LLM-based evaluation services.
@@ -88,7 +94,7 @@ EvaluAI-Project-main/
 │       └── assets/
 ├── examples/                
 │   ├── example_exam.docx
-|   ├── example_exam.pdf
+│   ├── example_exam.pdf
 │   ├── example_rubric.docx
 │   └── example_rubric.pdf
 ├── case-study/
@@ -100,6 +106,7 @@ EvaluAI-Project-main/
 ├── docker-compose.yml
 ├── package.json
 ├── .env / .env.example
+├── PRIVACY_AND_SECURITY.md
 └── temp/
 ```
 
