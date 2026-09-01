@@ -176,6 +176,7 @@ Only `temperature` and `max_output_tokens` were explicitly configured by EvaluAI
 
 The implementation used the Google Gemini API through the Google Generative AI Python SDK (`google.generativeai`). The model was instantiated using the exact identifier `gemini-2.5-flash`.
 
+
 ## 5. Malformed Outputs and API Failure Handling
 
 EvaluAI expects the LLM to return a structured JSON response. The system first attempts to extract JSON from a Markdown `json` code block and, if this is not available, searches the response for a JSON object or array. The extracted content is then cleaned and parsed using Python's `json` library.
@@ -184,6 +185,8 @@ If the response is empty, does not contain valid JSON, or cannot be parsed, the 
 
 For image-based evaluation, unsuccessful requests are automatically retried up to three times, with an increasing delay between attempts. After the final unsuccessful attempt, no result is returned. PDF-based evaluation does not implement an internal retry loop; errors are propagated to the calling layer.
 
+
+## 6. Operational metrics and cost model
 
 ### 6.1. Observed operational metrics
 
