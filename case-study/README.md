@@ -196,8 +196,9 @@ For image-based evaluation, unsuccessful requests are automatically retried up t
 
 The following metrics were recorded during the six repeated batch evaluations of the 13 student submissions (13 submissions × 3 executions × 2 conditions = 78 LLM evaluations in total).
 
-- Processing time. Median inter-submission time of ≈ 25 s in the no-rubric runs (per-run medians: 32 s, 25 s, 23 s) and ≈ 21 s in the rubric-guided runs (21 s, 22 s, 21 s). Uninterrupted intervals ranged from 14 to 63 s. A complete 13-submission batch finished in 4.5–7.5 minutes. Evaluations are dispatched sequentially by the orchestrator.
-- Execution success rate. All 78 evaluations returned valid structured JSON and produced an evaluation report (78/78 successful). The handling of malformed outputs and API failures is described in Section 5.
+- Evaluation time. A complete batch of 13 submissions required between 4.5 and 7.5 minutes. Evaluations were processed sequentially by the orchestrator. This corresponds to an elapsed time of approximately 20–35 seconds per evaluation.
+- Execution success rate. All 78 evaluations completed successfully, returned valid structured JSON, and produced an evaluation report (78/78 successful).
+
 
 ### 6.2. Cost model
 
