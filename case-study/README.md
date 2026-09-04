@@ -1,6 +1,6 @@
 # EvaluAI Case Study
 
-This directory contains the materials and experimental configuration associated with the validation study reported in Section 3.4, **“Validation and performance analysis,”** of the associated paper.
+This directory contains the materials and experimental configuration associated with the validation study reported in Section 3.4, "Validation and performance analysis," of the associated paper.
 
 The purpose of this directory is to improve the transparency and reproducibility of the reported experiments by documenting the assessment materials, experimental conditions, prompt templates, LLM configuration, evaluation procedure, and output-handling strategy used in the case study.
 
@@ -17,7 +17,7 @@ No personally identifiable student information is included in the materials prov
 
 ## 1. Student Submissions
 
-The initial dataset comprised examination submissions from 14 students enrolled in an undergraduate Software Engineering course.
+The initial dataset comprised examination submissions from 14 students enrolled in the "Analysis and Design of Algorithms" course at the University of Extremadura (Spain).
 
 One submission was excluded because its corresponding instructor score could not be retrieved from the original grading records, leaving 13 submissions for analysis.
 
@@ -42,12 +42,12 @@ The materials included here correspond to those used in the reported case study 
 
 Each student submission was evaluated under two experimental conditions:
 
-1. **Evaluation without a structured rubric**
-2. **Rubric-guided evaluation**
+1. Evaluation without a structured rubric
+2. Rubric-guided evaluation
 
 LLM-based grading is inherently non-deterministic, even when the same model, prompt, input submission, and generation configuration are used. To characterize this run-to-run variability, each student submission was independently evaluated three times under each experimental condition. This design allowed us to assess the stability of the generated scores while keeping the experimental cost and execution time manageable.
 
-The individual scores from the three runs were used to evaluate run-to-run consistency through the Intraclass Correlation Coefficient (ICC). For comparison with instructor grading and computation of the reported error metrics, the three scores obtained for each submission and condition were averaged.
+The individual scores from the three runs were used to evaluate run-to-run consistency using an absolute-agreement Intraclass Correlation Coefficient (ICC). For comparison with instructor grading and computation of the reported error metrics, the three scores obtained for each submission and condition were averaged.
 
 ### 3.1. Evaluation Without a Structured Rubric
 
@@ -167,8 +167,8 @@ The experiments were performed using the following LLM configuration.
 | Parameter | Configuration |
 | --- | --- |
 | Provider | Google |
-| Model | Gemini 3.5 Flash |
-| Exact model identifier | `gemini-3.5-flash` |
+| Model | Gemini 3.6 Flash |
+| Exact model identifier | `gemini-3.6-flash` |
 | SDK | Google Generative AI Python SDK (`google.generativeai`) |
 | Temperature | `0.3` |
 | Top-p | Provider default |
@@ -178,7 +178,7 @@ The experiments were performed using the following LLM configuration.
 
 Only `temperature` and `max_output_tokens` were explicitly configured by EvaluAI. Other generation parameters, including `top_p` and `top_k`, were not explicitly specified and therefore used the defaults provided by the Google Gemini API. The same model and generation configuration were used throughout the reported evaluation. 
 
-The implementation used the Google Gemini API through the Google Generative AI Python SDK (`google.generativeai`). The model was instantiated using the exact identifier `gemini-3.5-flash`.
+The implementation used the Google Gemini API through the Google Generative AI Python SDK (`google.generativeai`). The model was instantiated using the exact identifier `gemini-3.6-flash`.
 
 
 ## 5. Malformed Outputs and API Failure Handling
@@ -196,23 +196,46 @@ For image-based evaluation, unsuccessful requests are automatically retried up t
 
 The following metrics were recorded during the six repeated batch evaluations of the 13 student submissions (13 submissions × 3 executions × 2 conditions = 78 LLM evaluations in total).
 
-- **Processing time.** Median inter-submission time of ≈ 25 s in the no-rubric runs (per-run medians: 32 s, 25 s, 23 s) and ≈ 21 s in the rubric-guided runs (21 s, 22 s, 21 s). Uninterrupted intervals ranged from 14 to 63 s. A complete 13-submission batch finished in 4.5–7.5 minutes. Evaluations are dispatched sequentially by the orchestrator.
-- **Execution success rate.** All 78 evaluations returned valid structured JSON and produced an evaluation report (78/78 successful). The handling of malformed outputs and API failures is described in Section 5.
+- Processing time. Median inter-submission time of ≈ 25 s in the no-rubric runs (per-run medians: 32 s, 25 s, 23 s) and ≈ 21 s in the rubric-guided runs (21 s, 22 s, 21 s). Uninterrupted intervals ranged from 14 to 63 s. A complete 13-submission batch finished in 4.5–7.5 minutes. Evaluations are dispatched sequentially by the orchestrator.
+- Execution success rate. All 78 evaluations returned valid structured JSON and produced an evaluation report (78/78 successful). The handling of malformed outputs and API failures is described in Section 5.
 
 ### 6.2. Cost model
 
-The cost of one evaluation can be estimated as:
+The cost of one evaluation depends on the number of input and output tokens processed by the Gemini API:
 
+```text
+C = input cost + output cost
 ```
-C = (P_in / 10^6) · (T_prompt + T_rubric + T_doc)  +  (P_out / 10^6) · (T_answer + T_thinking)
+
+where:
+
+```text
+input cost  = (input tokens / 10^6) × P_in
+output cost = (output tokens / 10^6) × P_out
 ```
 
-**Token accounting (Gemini API):**
+For EvaluAI, input tokens include the prompt, the rubric when used, and the submitted document. Output tokens include the generated evaluation and the model's internal thinking tokens.
 
-- PDF inputs: each page is billed as a fixed 258 input tokens, independently of its content, i.e. `T_doc = 258 · p` for a `p`-page submission.
-- Image inputs (scanned pages sent as PNG): images with both dimensions ≤ 384 px are billed as 258 tokens. Larger images are tiled into 768 × 768 crops billed at 258 tokens per tile (a typical scanned page corresponds to roughly 4–8 tiles).
-- Measured in this case study: prompt template ≈ 500 tokens in the no-rubric condition and ≈ 1,050 tokens in the rubric-guided condition; visible output per evaluation: median ≈ 775–810 tokens, maximum ≈ 1,000 tokens. Thinking tokens are billed as output tokens and vary per request. Total output is bounded by the configured `max_output_tokens = 8000`.
+Token accounting (Gemini API):
 
-**Prices** (Gemini 3.5 Flash, Standard paid tier, list prices verified in September 2026 and subject to change): `P_in` = $1.50 and `P_out` = $9.00 per million tokens. The Batch API offers both at a 50% discount for non-interactive workloads.
+- PDF submissions: each page is billed as 258 input tokens. Therefore, a `p`-page PDF contributes `258 × p` input tokens.
+- Image submissions: scanned pages sent as images may require more tokens because large images are divided into several regions before processing. Each region is billed separately.
+- Estimated for this case study: the prompt is estimated to contain approximately 500 tokens in the no-rubric condition and approximately 1,050 tokens in the rubric-guided condition. The visible model output is estimated at approximately 775–810 tokens per evaluation, with a maximum of approximately 1,000 tokens. Thinking tokens were not directly measured and may vary between requests. They are billed as output tokens.
 
-**Worked example** (rubric-guided evaluation of a 2-page PDF submission): input ≈ 1,050 + 258 · 2 ≈ 1,566 tokens ≈ $0.0023 and output ≈ 775 visible tokens plus thinking tokens (assuming 500–1,500) ≈ $0.011–0.020. The typical total cost is therefore approximately **$0.014–0.023 per submission**, depending primarily on the number of thinking tokens. A full 13-submission batch would therefore typically cost approximately **$0.18–0.30**.
+
+Prices. For Gemini 3.6 Flash, the Standard paid-tier introductory prices applicable in September 2026 were $0.75 per million input tokens and $3.75 per million output tokens. These prices are subject to change.
+
+Worked example. For a rubric-guided evaluation of a 2-page PDF:
+
+```text
+Input tokens ≈ 1,050 + (258 × 2) = 1,566
+Input cost ≈ $0.0012
+```
+
+Assuming approximately 775 visible output tokens and 500–1,500 thinking tokens:
+
+```text
+Output cost ≈ $0.0048–0.0085
+```
+
+The estimated total cost is therefore approximately $0.006–0.010 per submission. For a batch of 13 submissions, the estimated cost is approximately $0.08–0.13.

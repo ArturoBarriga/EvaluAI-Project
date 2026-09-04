@@ -93,24 +93,23 @@ EvaluAI-Project-main/
 │       ├── LoadingOverlay.js
 │       └── assets/
 ├── examples/                
-│   ├── example_exam.docx
 │   ├── example_exam.pdf
-│   ├── example_rubric.docx
 │   └── example_rubric.pdf
 ├── case-study/
 │   ├── README.md
-│   ├── case_study_exam.docx
 │   ├── case_study_exam.pdf
-│   ├── case_study_rubric.docx
 │   └── case_study_rubric.pdf
 ├── docker-compose.yml
 ├── package.json
 ├── .env / .env.example
 ├── PRIVACY_AND_SECURITY.md
+├── README.md
 └── temp/
 ```
 
 The `examples/` folder contains an example exam that can be used to test the platform after installation.
+
+he `case-study/` folder contains the exact exam and rubric used in the experimental validation reported in the associated paper, together with a [`README.md`](case-study/README.md) describing the complete experimental specification, including the exact prompt templates, the exact model and API configuration, generation parameters, and the procedure followed for malformed outputs and API failures.
 
 ## Requirements
 
