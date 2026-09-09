@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException, Body, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, Body, UploadFile, File, Form, Depends
+from backend.auth import get_current_user
 from backend.repo.temp_exams_repo import (
     insert_temp_exam,
     get_temp_exam,
@@ -12,6 +13,16 @@ from backend.orchestrator import process_full_pdf, split_pdf_into_exams
 from typing import List, Dict
 
 router = APIRouter(prefix="/temp-exams", tags=["Temporary Exams"])
+
+
+def _get_owned_temp_exam(temp_exam_id: str, user: dict):
+    try:
+        exam = get_temp_exam(temp_exam_id)
+    except Exception:
+        exam = None
+    if not exam or str(exam.get("user_id")) != user["id"]:
+        raise HTTPException(status_code=404, detail="Temporary exam not found")
+    return exam
 
 def mongo_to_dict(doc):
     if not doc:
@@ -37,18 +48,19 @@ async def process_sub_pdf(pdf_sub_bytes, index, rubric_id, comments, user_id, re
         os.remove(tmpfile_path)
 
 @router.get("/{temp_exam_id}")
-async def get_temp_exam_endpoint(temp_exam_id: str):
-    exam = get_temp_exam(temp_exam_id)
-    if not exam:
-        raise HTTPException(status_code=404, detail="Temporary exam not found")
+async def get_temp_exam_endpoint(temp_exam_id: str, user: dict = Depends(get_current_user)):
+    exam = _get_owned_temp_exam(temp_exam_id, user)
     exam["_id"] = str(exam["_id"])
     return exam
 
 @router.put("/{temp_exam_id}")
 async def update_temp_exam_endpoint(
     temp_exam_id: str,
-    data: Dict = Body(...)
+    data: Dict = Body(...),
+    user: dict = Depends(get_current_user)
 ):
+    _get_owned_temp_exam(temp_exam_id, user)
+    data.pop("user_id", None)
     correction = data.get("correction")
     if correction is None:
         raise HTTPException(status_code=400, detail="Field 'correction' is required")
@@ -59,7 +71,8 @@ async def update_temp_exam_endpoint(
     return {"message": "Temporary correction updated"}
 
 @router.delete("/{temp_exam_id}")
-async def delete_temp_exam_endpoint(temp_exam_id: str):
+async def delete_temp_exam_endpoint(temp_exam_id: str, user: dict = Depends(get_current_user)):
+    _get_owned_temp_exam(temp_exam_id, user)
     success = delete_temp_exam(temp_exam_id)
     if not success:
         raise HTTPException(status_code=404, detail="Temporary exam not found")
@@ -71,9 +84,10 @@ async def grade_batch_exams(
     files: List[UploadFile] = File([]),
     rubric_id: str = Form(None),
     comments: str = Form(""),
-    user_id: str = Form(...),
     pages_per_exam: int = Form(None),
+    user: dict = Depends(get_current_user),
 ):
+    user_id = user["id"]
     result = []
 
     if mode == "multiple":
@@ -109,8 +123,9 @@ async def grade_exam_endpoint(
     pdf: UploadFile = File(...),
     rubric_id: str = Form(None),
     comments: str = Form(""),
-    user_id: str = Form(...)
+    user: dict = Depends(get_current_user)
 ):
+    user_id = user["id"]
     try:
         result = await grade_exam(
             pdf=pdf,

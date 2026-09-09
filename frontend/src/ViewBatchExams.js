@@ -1,3 +1,4 @@
+import { authFetch } from "./api";
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./ViewBatchExams.css";
@@ -21,7 +22,7 @@ function ViewBatchExams({ onExit }) {
   useEffect(() => {
     if (!examId) return;
 
-    fetch(`http://localhost:8000/temp-exams/${examId}`)
+    authFetch(`/temp-exams/${examId}`)
       .then((res) => {
         if (!res.ok) throw new Error("Could not load temp exam");
         return res.json();
@@ -56,7 +57,7 @@ function ViewBatchExams({ onExit }) {
   const handleSaveAndNext = async () => {
     setSaving(true);
     try {
-      const putResp = await fetch(`http://localhost:8000/temp-exams/${examId}`, {
+      const putResp = await authFetch(`/temp-exams/${examId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -73,7 +74,7 @@ function ViewBatchExams({ onExit }) {
         throw new Error(errorText || "Error updating temp exam");
       }
 
-      const postResp = await fetch(`http://localhost:8000/exams/finalize-correction/${examId}`, {
+      const postResp = await authFetch(`/exams/finalize-correction/${examId}`, {
         method: "POST",
       });
 

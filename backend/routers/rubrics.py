@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from backend.auth import get_current_user
 from backend.repo.rubric_repo import (
     create_rubric,
     get_rubrics,
@@ -9,9 +10,21 @@ from backend.repo.rubric_repo import (
 
 router = APIRouter(prefix="/rubrics", tags=["Rubrics"])
 
+
+def _get_owned_rubric(rubric_id: str, user: dict):
+    try:
+        rubric = get_rubric_by_id(rubric_id)
+    except Exception:
+        rubric = None
+    if not rubric or rubric.get("creator") != user["email"]:
+        raise HTTPException(status_code=404, detail="Rubric not found")
+    return rubric
+
+
 @router.post("/create")
-async def create_rubric_endpoint(rubric: dict):
-    if not rubric.get("creator") or not rubric.get("name") or not rubric.get("questions"):
+async def create_rubric_endpoint(rubric: dict, user: dict = Depends(get_current_user)):
+    rubric["creator"] = user["email"]
+    if not rubric.get("name") or not rubric.get("questions"):
         raise HTTPException(status_code=400, detail="Missing required fields")
 
     for question in rubric["questions"]:
@@ -28,26 +41,30 @@ async def create_rubric_endpoint(rubric: dict):
 
     return {"message": "Rubric created successfully", "id": rubric_id}
 
-@router.get("/{teacher_email}")
-async def get_rubrics_endpoint(teacher_email: str):
-    return get_rubrics(teacher_email)
+
+@router.get("/mine")
+async def get_rubrics_endpoint(user: dict = Depends(get_current_user)):
+    return get_rubrics(user["email"])
+
 
 @router.get("/get/{rubric_id}")
-async def get_rubric_by_id_endpoint(rubric_id: str):
-    rubric = get_rubric_by_id(rubric_id)
-    if not rubric:
-        raise HTTPException(status_code=404, detail="Rubric not found")
-    return rubric
+async def get_rubric_by_id_endpoint(rubric_id: str, user: dict = Depends(get_current_user)):
+    return _get_owned_rubric(rubric_id, user)
+
 
 @router.put("/{rubric_id}")
-async def update_rubric_endpoint(rubric_id: str, new_data: dict):
+async def update_rubric_endpoint(rubric_id: str, new_data: dict, user: dict = Depends(get_current_user)):
+    _get_owned_rubric(rubric_id, user)
+    new_data.pop("creator", None)
     if update_rubric(rubric_id, new_data):
         return {"message": "Rubric updated"}
     else:
         raise HTTPException(status_code=404, detail="Rubric not found")
 
+
 @router.delete("/{rubric_id}")
-async def delete_rubric_endpoint(rubric_id: str):
+async def delete_rubric_endpoint(rubric_id: str, user: dict = Depends(get_current_user)):
+    _get_owned_rubric(rubric_id, user)
     if delete_rubric(rubric_id):
         return {"message": "Rubric deleted"}
     else:

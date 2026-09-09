@@ -1,3 +1,4 @@
+import { authFetch } from "./api";
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation, Navigate, useParams, useNavigate } from "react-router-dom";
 import "./EditCorrection.css";
@@ -21,7 +22,7 @@ function EditCorrection() {
 
   useEffect(() => {
     if (!examId) return;
-    fetch(`http://localhost:8000/exams/${examId}`)
+    authFetch(`/exams/${examId}`)
       .then((res) => {
         if (!res.ok) throw new Error("Could not load final correction");
         return res.json();
@@ -55,7 +56,7 @@ function EditCorrection() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const resp = await fetch(`http://localhost:8000/exams/${examId}`, {
+      const resp = await authFetch(`/exams/${examId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

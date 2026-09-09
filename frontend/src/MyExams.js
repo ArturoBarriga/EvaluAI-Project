@@ -1,3 +1,4 @@
+import { authFetch } from "./api";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MyExams.css";
@@ -11,7 +12,7 @@ function MyExams({ user, onBack }) {
     if (!user?.id) return;
     const fetchExams = async () => {
       try {
-        const resp = await fetch(`http://localhost:8000/exams/all_my_exams/${user.id}`);
+        const resp = await authFetch(`/exams/all_my_exams`);
         if (!resp.ok) {
           throw new Error(`Error loading exams: ${resp.statusText}`);
         }
@@ -98,9 +99,17 @@ function MyExams({ user, onBack }) {
                 <td>
                   {exam.status === "success" && (
                     <button
-                      onClick={(e) => {
+                      onClick={async (e) => {
                         e.stopPropagation();
-                        window.open(`http://localhost:8000/exams/download-report/${exam._id}`, "_blank");
+                        const res = await authFetch(`/exams/download-report/${exam._id}`);
+                        if (!res.ok) return;
+                        const blob = await res.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.download = `Exam_Report_${exam._id}.pdf`;
+                        a.click();
+                        window.URL.revokeObjectURL(url);
                       }}
                       className="download-btn"
                     >

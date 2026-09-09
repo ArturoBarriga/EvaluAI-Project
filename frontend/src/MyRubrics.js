@@ -1,3 +1,4 @@
+import { authFetch } from "./api";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MyRubrics.css";
@@ -14,7 +15,7 @@ function MyRubrics({ user, onBack }) {
 
   const loadRubrics = async () => {
     try {
-      const resp = await fetch(`http://localhost:8000/rubrics/${user.email}`);
+      const resp = await authFetch(`/rubrics/mine`);
       if (!resp.ok) throw new Error("Error loading rubrics");
       const data = await resp.json();
       setRubrics(data);
@@ -30,7 +31,7 @@ function MyRubrics({ user, onBack }) {
 
   const deleteRubric = async (id) => {
     try {
-      const resp = await fetch(`http://localhost:8000/rubrics/${id}`, { method: "DELETE" });
+      const resp = await authFetch(`/rubrics/${id}`, { method: "DELETE" });
       if (!resp.ok) throw new Error("Could not delete rubric");
       setRubrics(rubrics.filter(r => r._id !== id));
       setRubricToDelete(null);
@@ -71,7 +72,7 @@ function MyRubrics({ user, onBack }) {
 
   const handleSaveEdit = async () => {
     try {
-      const resp = await fetch(`http://localhost:8000/rubrics/${editRubric._id}`, {
+      const resp = await authFetch(`/rubrics/${editRubric._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

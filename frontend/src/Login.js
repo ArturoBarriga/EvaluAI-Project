@@ -26,6 +26,7 @@ function Login({ onLogin }) {
         return;
       }
       const data = await resp.json();
+      localStorage.setItem("access_token", data.access_token);
       onLogin(data.user);
 
       if (data.user.role === "teacher") {

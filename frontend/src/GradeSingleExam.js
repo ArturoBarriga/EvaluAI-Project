@@ -1,3 +1,4 @@
+import { authFetch } from "./api";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./GradeSingleExam.css";
@@ -13,7 +14,7 @@ function GradeSingleExam({ user, onBack }) {
 
   useEffect(() => {
     if (!user?.email) return;
-    fetch(`http://localhost:8000/rubrics/${user.email}`)
+    authFetch(`/rubrics/mine`)
       .then(res => res.json())
       .then(data => setRubrics(data))
       .catch(err => console.error(err));
@@ -34,7 +35,7 @@ function GradeSingleExam({ user, onBack }) {
     if (user?.id) formData.append("user_id", user.id);
 
     try {
-      const resp = await fetch("http://localhost:8000/temp-exams/grade-single", {
+      const resp = await authFetch("/temp-exams/grade-single", {
         method: "POST",
         body: formData,
       });

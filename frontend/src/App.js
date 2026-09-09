@@ -55,12 +55,12 @@ function App() {
             path="/teacher-dashboard"
             element={
               <PrivateRoute user={user}>
-                <TeacherDashboard user={user} onLogout={() => setUser(null)} />
+                <TeacherDashboard user={user} onLogout={() => (localStorage.removeItem("access_token"), setUser(null))} />
               </PrivateRoute>
             }
           />
 
-          <Route element={<LayoutWithNavbar user={user} onLogout={() => setUser(null)} />}>
+          <Route element={<LayoutWithNavbar user={user} onLogout={() => (localStorage.removeItem("access_token"), setUser(null))} />}>
             <Route
               path="/grade-exam"
               element={

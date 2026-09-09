@@ -26,6 +26,7 @@ services:
       - "8000:8000"
     environment:
       GEMINI_API_KEY: ${GEMINI_API_KEY}
+      JWT_SECRET: ${JWT_SECRET}
       MONGODB_URI: ${MONGODB_URI:-mongodb://root:example@mongo:27017/miappdb?authSource=admin}
     volumes:
       - .:/app

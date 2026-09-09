@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from backend.repo.user_repo import create_user, validate_user, get_user_by_email
+from backend.auth import create_access_token
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -24,8 +25,15 @@ async def login(data: dict):
         if not user_info:
             raise HTTPException(status_code=404, detail="User not found")
         user_info["_id"] = str(user_info["_id"])
+        token = create_access_token({
+            "id": user_info["_id"],
+            "email": user_info.get("email"),
+            "role": user_info.get("role"),
+        })
         return {
             "message": "Login successful",
+            "access_token": token,
+            "token_type": "bearer",
             "user": {
                 "id": user_info["_id"],
                 "name": user_info.get("name"),

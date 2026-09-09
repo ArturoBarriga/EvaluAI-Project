@@ -1,3 +1,4 @@
+import { authFetch } from "./api";
 import React, { useState } from "react";
 import "./CreateRubric.css";
 
@@ -65,7 +66,7 @@ function CreateRubric({ user, onBack }) {
     setMessage(null);
 
     try {
-      const resp = await fetch("http://localhost:8000/rubrics/create", {
+      const resp = await authFetch("/rubrics/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

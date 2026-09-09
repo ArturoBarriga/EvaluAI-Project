@@ -1,3 +1,4 @@
+import { authFetch } from "./api";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./GradeBatchExams.css";
@@ -15,7 +16,7 @@ function GradeBatchExams({ user, onBack }) {
 
   useEffect(() => {
     if (!user?.email) return;
-    fetch(`http://localhost:8000/rubrics/${user.email}`)
+    authFetch(`/rubrics/mine`)
       .then(res => res.json())
       .then(data => setRubrics(Array.isArray(data) ? data : []))
       .catch(err => console.error(err));
@@ -46,7 +47,7 @@ function GradeBatchExams({ user, onBack }) {
     }
 
     try {
-      const resp = await fetch("http://localhost:8000/temp-exams/grade-batch", {
+      const resp = await authFetch("/temp-exams/grade-batch", {
         method: "POST",
         body: formData,
       });
