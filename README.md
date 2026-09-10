@@ -51,6 +51,7 @@ EvaluAI-Project-main/
 │   ├── database.py
 │   ├── orchestrator.py
 │   ├── requirements.txt
+│   ├── auth.py
 │   ├── dockerfile
 │   ├── routers/
 │   │   ├── exams.py
@@ -71,6 +72,7 @@ EvaluAI-Project-main/
 │   ├── package.json
 │   ├── public/
 │   └── src/
+│       ├── api.js
 │       ├── App.js
 │       ├── index.js
 │       ├── UserContext.js
@@ -117,6 +119,7 @@ he `case-study/` folder contains the exact exam and rubric used in the experimen
 * Docker Engine
 * Docker Compose v2
 * A valid Google Gemini API key
+* Python 3
 
 ## Installation and Execution with Docker
 
@@ -151,19 +154,47 @@ Open the `.env` file and set the Gemini API key:
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-### 4. Start the Application
+### 4. Generate and Configure the JWT Secret
+
+EvaluAI uses a JSON Web Token (JWT) secret to sign and verify authentication tokens. Each deployment must use its own secure, randomly generated secret. The JWT secret must be kept private.
+
+Linux or macOS:
+
+```bash
+python3 -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Windows CMD:
+
+```cmd
+py -c "import secrets; print(secrets.token_hex(32))"
+```
+
+If the `py` command is not available, use:
+
+```cmd
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Copy the generated value into the `.env` file:
+
+```env
+JWT_SECRET=your_generated_secret
+```
+
+### 5. Start the Application
 
 ```bash
 docker compose up -d --build
 ```
 
-### 5. Check That the Containers Are Running
+### 6. Check That the Containers Are Running
 
 ```bash
 docker compose ps
 ```
 
-### 6. Open the Application
+### 7. Open the Application
 
 Once the containers are running, open the frontend in a web browser:
 
@@ -171,7 +202,7 @@ Once the containers are running, open the frontend in a web browser:
 http://localhost:3000
 ```
 
-### 7. Stop the Application
+### 8. Stop the Application
 
 To stop the application while preserving stored data:
 
@@ -204,7 +235,7 @@ Suggested testing procedure:
 2. Open the frontend in the browser.
 3. Create or log in with a user account.
 4. Go to the rubric management section.
-5. Load or manually create the example rubric.
+5. Create the example rubric.
 6. Go to the exam grading section.
 7. Select the example rubric.
 8. Upload the example exam.
