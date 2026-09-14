@@ -115,7 +115,7 @@ EvaluAI-Project-main/
 
 The `examples/` folder contains an example exam that can be used to test the platform after installation.
 
-he `case-study/` folder contains the exact exam and rubric used in the experimental validation reported in the associated paper, together with a [`README.md`](case-study/README.md) describing the complete experimental specification, including the exact prompt templates, the exact model and API configuration, generation parameters, and the procedure followed for malformed outputs and API failures.
+The `case-study/` folder contains the exact exam and rubric used in the experimental validation reported in the associated paper, together with a [`README.md`](case-study/README.md) describing the complete experimental specification, including the exact prompt templates, the exact model and API configuration, generation parameters, and the procedure followed for malformed outputs and API failures.
 
 ## Requirements
 
@@ -206,7 +206,29 @@ Once the containers are running, open the frontend in a web browser:
 http://localhost:3000
 ```
 
-### 8. Stop the Application
+### 8. Automated Tests
+
+The backend includes an automated pytest suite.
+
+Linux or macOS:
+
+```bash
+python3 -m pytest backend/tests
+```
+
+Windows CMD:
+
+```cmd
+py -m pytest backend/tests
+```
+
+If the `py` command is not available, use:
+
+```cmd
+python -m pytest backend/tests
+```
+
+### 9. Stop the Application
 
 To stop the application while preserving stored data:
 
