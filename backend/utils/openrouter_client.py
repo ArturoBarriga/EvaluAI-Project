@@ -47,7 +47,7 @@ def send_image(prompt, pdf_file, page_number, image_base64=None, image_url=None)
             extra_headers={
                 "HTTP-Referer": "http://localhost",
             },
-            model="google/gemini-2.0-flash-thinking-exp:free",
+            model="google/gemini-3.6-flash-thinking-exp:free",
             messages=[{
                 "role": "user",
                 "content": [
