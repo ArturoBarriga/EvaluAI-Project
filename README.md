@@ -63,6 +63,10 @@ EvaluAI-Project-main/
 │   │   ├── rubric_repo.py
 │   │   ├── temp_exams_repo.py
 │   │   └── user_repo.py
+│   ├── tests/
+│   │   ├── conftest.py
+│   │   ├── test_access_control.py
+│   │   └── test_auth.py
 │   └── utils/
 │       ├── gemini_client.py
 │       ├── openai_client.py
