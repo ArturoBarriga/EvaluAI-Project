@@ -4,6 +4,13 @@ This directory contains the materials and experimental configuration associated 
 
 The purpose of this directory is to improve the transparency and reproducibility of the reported experiments by documenting the assessment materials, experimental conditions, prompt templates, LLM configuration, evaluation procedure, and output-handling strategy used in the case study.
 
+## Experimental Code Version
+
+The experiments reported in the associated SoftwareX paper were conducted using the following version of the EvaluAI source code:
+
+* Commit: [`ba78eca4a0622526d7843cf2914032e8d49cd4e6`](https://github.com/ArturoBarriga/EvaluAI-Project/commit/ba78eca4a0622526d7843cf2914032e8d49cd4e6)
+* Release: [`v1.0`](https://github.com/ArturoBarriga/EvaluAI-Project/releases/tag/v1.0)
+
 ## Contents
 
 The directory contains the following files:
