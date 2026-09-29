@@ -17,6 +17,8 @@ The directory contains the following files:
 
 - `case_study_exam.pdf`: exam problem used in the validation study.
 - `case_study_rubric.pdf`: complete structured rubric used in the rubric-guided evaluation.
+- `metrics_without_rubric.xlsx`: de-identified instructor and LLM scores for the evaluation without rubric guidance, including the calculations of the reported error metrics and their 95% confidence intervals.
+- `metrics_with_rubric.xlsx`: de-identified instructor and LLM scores for the rubric-guided evaluation, including the calculations of the reported error metrics and their 95% confidence intervals.
 - `README.md`: complete description of the experimental setup and reproduction information.
 
 No personally identifiable student information is included in the materials provided in this directory.
@@ -165,6 +167,12 @@ Return EXCLUSIVELY a JSON object with this structure:
 All numeric values must be unquoted numbers.
 Do not include anything outside that JSON.
 ```
+
+### 3.3. Evaluation Data and Reported Metrics
+
+The de-identified scores used in the quantitative analysis are provided in `metrics_without_rubric.xlsx` and `metrics_with_rubric.xlsx`. Each file contains the instructor score and the three LLM scores for each of the 13 included submissions. The spreadsheets also include the calculations used to derive MAE, MSE, RMSE, ICC(2,1), and their corresponding 95% confidence intervals.
+
+For MAE and MSE, 95% confidence intervals were calculated across the 13 paired submissions using the standard error and Student's t-distribution. The RMSE confidence interval was obtained by applying the square root transformation to the MSE confidence limits. The 95% confidence interval for ICC(2,1) was calculated from the two-way random-effects ANOVA components using the F-distribution.
 
 
 ## 4. LLM and Generation Configuration
