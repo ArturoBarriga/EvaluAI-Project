@@ -104,7 +104,9 @@ EvaluAI-Project-main/
 ├── case-study/
 │   ├── README.md
 │   ├── case_study_exam.pdf
-│   └── case_study_rubric.pdf
+│   ├── case_study_rubric.pdf
+│   ├── metrics_with_rubric.xlsx
+│   └── metrics_without_rubric.xlsx
 ├── docker-compose.yml
 ├── package.json
 ├── .env / .env.example
