@@ -170,7 +170,7 @@ Do not include anything outside that JSON.
 
 ### 3.3. Evaluation Data and Reported Metrics
 
-The de-identified scores used in the quantitative analysis are provided in `metrics_without_rubric.xlsx` and `metrics_with_rubric.xlsx`. Each file contains the instructor score and the three LLM scores for each of the 13 included submissions. The spreadsheets also include the calculations used to derive MAE, MSE, RMSE, ICC(2,1), and their corresponding 95% confidence intervals.
+The de-identified scores used in the quantitative analysis are provided in two separate files, namely `metrics_without_rubric.xlsx` for the evaluation without rubric guidance and `metrics_with_rubric.xlsx` for the rubric-guided evaluation. Each file contains the instructor score and the three LLM scores for each of the 13 included submissions. The spreadsheets also include the calculations used to derive MAE, MSE, RMSE, ICC(2,1), and their corresponding 95% confidence intervals.
 
 For MAE and MSE, 95% confidence intervals were calculated across the 13 paired submissions using the standard error and Student's t-distribution. The RMSE confidence interval was obtained by applying the square root transformation to the MSE confidence limits. The 95% confidence interval for ICC(2,1) was calculated from the two-way random-effects ANOVA components using the F-distribution.
 

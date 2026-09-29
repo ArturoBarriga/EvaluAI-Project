@@ -117,7 +117,7 @@ EvaluAI-Project-main/
 
 The `examples/` folder contains an example exam that can be used to test the platform after installation.
 
-The `case-study/` folder contains the exact exam and rubric used in the experimental validation reported in the associated paper, together with a [`README.md`](case-study/README.md) describing the complete experimental specification, including the exact prompt templates, the exact model and API configuration, generation parameters, and the procedure followed for malformed outputs and API failures.
+The `case-study/` folder contains the exact exam and rubric used in the experimental validation reported in the associated paper, together with the de-identified evaluation data for both experimental conditions (metrics_with_rubric.xlsx and metrics_without_rubric.xlsx). These spreadsheets include the instructor grades, the three LLM scores for each submission, and the calculations of the reported error metrics, ICC(2,1), and their corresponding 95% confidence intervals. A dedicated [`README.md`](case-study/README.md) documents the complete experimental specification, including the exact prompt templates, the exact model and API configuration, generation parameters, and the procedure followed for malformed outputs and API failures.
 
 ## Requirements
 
